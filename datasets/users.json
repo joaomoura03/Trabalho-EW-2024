@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "1",
+    "nome": "Daniel Henrique Cracel Rodrigues",
+    "foto": "foto_Daniel.jpeg",
+    "categoria": "Aluno",
+    "filiacao": "Dep. Informática - Universidade do Minho",
+    "email": "100661@alunos.uminho.pt",
+    "webpage": "https://github.com/Rcracel09",
+    "role": "Aluno",
+    "password": "1234",
+    "registrationDate": "2024-06-08T15:00:00Z",
+    "lastAccessDate": "2024-06-09T10:00:00Z"
+  },
+  {
+    "_id": "2",
+    "nome": "José Carlos Ramalho",
+    "foto": "jcr-keep.jpeg",
+    "categoria": "Professor/Investigador/Empresário",
+    "filiacao": "Dep. Informática - Universidade do Minho",
+    "email": "jcr@di.uminho.pt",
+    "webpage": "http://www.di.uminho.pt/~jcr",
+    "role": "Produtor",
+    "password": "1234",
+    "registrationDate": "2024-06-08T15:00:00Z",
+    "lastAccessDate": "2024-06-09T10:00:00Z"
+  }
+]
