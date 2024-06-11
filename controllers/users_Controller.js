@@ -23,3 +23,7 @@ module.exports.removeById = id => {
 module.exports.update = (id, user) => {
   return User.updateOne({ _id: id }, user);
 }
+
+module.exports.findUserById = async (id) => {
+  return await User.findById(id).select('nome foto categoria filiacao email webpage registrationDate').exec();
+}

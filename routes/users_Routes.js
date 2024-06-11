@@ -12,10 +12,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Encontrar um usuário pelo ID
+// Rota para retornar informações específicas de um usuário
 router.get('/:id', async (req, res) => {
   try {
-    const user = await userController.findById(req.params.id);
+    const user = await userController.findUserById(req.params.id);
     if (user) {
       res.json(user);
     } else {

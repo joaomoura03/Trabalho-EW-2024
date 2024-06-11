@@ -19,3 +19,54 @@ module.exports.removeBySigla = sigla => {
 module.exports.update = (sigla, uc) => {
   return UC.updateOne({ sigla: sigla }, uc);
 }
+
+// Novo método para listar horários de uma UC específica
+module.exports.getHorariosBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('horario').exec();
+  if (uc) {
+    return uc.horario;
+  } else {
+    throw new Error('UC não encontrada');
+  }
+}
+
+// Novo método para listar avaliações e datas de uma UC específica
+module.exports.getAvaliacoesEDatasBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('avaliacao datas').exec();
+  if (uc) {
+    return { avaliacao: uc.avaliacao, datas: uc.datas };
+  } else {
+    throw new Error('UC não encontrada');
+  }
+}
+
+
+// Novo método para listar aulas de uma UC específica
+module.exports.getAulasBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('aulas').exec();
+  if (uc) {
+    return uc.aulas;
+  } else {
+    throw new Error('UC não encontrada');
+  }
+}
+
+// Novo método para listar aulas teóricas de uma UC específica
+module.exports.getAulasTeoricasBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('aulas').exec();
+  if (uc) {
+    return uc.aulas.filter(aula => aula.tipo === 'T');
+  } else {
+    throw new Error('UC não encontrada');
+  }
+}
+
+// Novo método para listar aulas práticas de uma UC específica
+module.exports.getAulasPraticasBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('aulas').exec();
+  if (uc) {
+    return uc.aulas.filter(aula => aula.tipo === 'P');
+  } else {
+    throw new Error('UC não encontrada');
+  }
+}
