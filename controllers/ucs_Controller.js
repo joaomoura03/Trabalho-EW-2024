@@ -51,8 +51,18 @@ module.exports.getAulasBySigla = async (sigla) => {
   }
 }
 
-// Novo método para listar aulas teóricas de uma UC específica
-module.exports.getAulasTeoricasBySigla = async (sigla) => {
+// Método para listar todas as aulas práticas de uma UC específica
+module.exports.getPraticasBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('aulas').exec();
+  if (uc) {
+    return uc.aulas.filter(aula => aula.tipo === 'P');
+  } else {
+    throw new Error('UC não encontrada');
+  }
+}
+
+// Método para listar todas as aulas teóricas de uma UC específica
+module.exports.getTeoricasBySigla = async (sigla) => {
   const uc = await UC.findOne({ sigla: sigla }).select('aulas').exec();
   if (uc) {
     return uc.aulas.filter(aula => aula.tipo === 'T');
@@ -61,11 +71,11 @@ module.exports.getAulasTeoricasBySigla = async (sigla) => {
   }
 }
 
-// Novo método para listar aulas práticas de uma UC específica
-module.exports.getAulasPraticasBySigla = async (sigla) => {
-  const uc = await UC.findOne({ sigla: sigla }).select('aulas').exec();
+// Método para listar todos os docentes de uma UC específica
+module.exports.getDocentesBySigla = async (sigla) => {
+  const uc = await UC.findOne({ sigla: sigla }).select('docentes').exec();
   if (uc) {
-    return uc.aulas.filter(aula => aula.tipo === 'P');
+    return uc.docentes;
   } else {
     throw new Error('UC não encontrada');
   }

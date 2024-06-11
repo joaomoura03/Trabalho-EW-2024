@@ -1,0 +1,85 @@
+doctype html
+html
+  head
+    title Detalhes da UC
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      #main-header {
+        background: #333;
+        color: #fff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #0779e4 3px solid;
+      }
+      #main-header h1 {
+        text-align: center;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .section {
+        margin-bottom: 20px;
+      }
+      .section h2 {
+        color: #333;
+        border-bottom: 2px solid #0779e4;
+        padding-bottom: 5px;
+      }
+      .section ul {
+        list-style: none;
+        padding: 0;
+      }
+      .section li {
+        background: #f4f4f4;
+        margin: 10px 0;
+        padding: 10px;
+        border-left: #0779e4 5px solid;
+      }
+  body
+    header#main-header
+      div.container
+        h1 Detalhes da UC #{uc.sigla}
+    div.container
+      div.content
+        .section
+          h2 Título
+          p #{uc.titulo}
+        .section 
+          h2 Docentes
+          a(href=`/ucs/${uc.sigla}/docentes`) Docentes
+        .section
+          h2 Horários
+          h3 Teóricas
+          ul
+            each teorica in uc.horario.teoricas
+              li #{teorica}
+          h3 Práticas
+          ul
+            each pratica in uc.horario.praticas
+              li #{pratica}
+        .section
+          h2 Avaliação e Datas 
+          a(href=`/ucs/${uc.sigla}/avaliacoes-e-datas`) Avaliação e Datas
+        .section 
+          h2 Aulas Práticas
+          a(href=`/ucs/${uc.sigla}/aulas/praticas`) Aulas Práticas
+          h2 Aulas Teóricas
+          a(href=`/ucs/${uc.sigla}/aulas/teoricas`) Aulas Teóricas
+        a(href='/ucs') Voltar à lista de siglas

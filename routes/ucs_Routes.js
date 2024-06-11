@@ -6,7 +6,7 @@ const ucController = require('../controllers/ucs_Controller');
 router.get('/', async (req, res) => {
   try {
     const ucs = await ucController.list();
-    res.json(ucs);
+    res.render('ucs', { ucs });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -17,7 +17,7 @@ router.get('/:sigla', async (req, res) => {
   try {
     const uc = await ucController.findBySigla(req.params.sigla);
     if (uc) {
-      res.json(uc);
+      res.render('ucDetalhes', { uc });
     } else {
       res.status(404).send('UC não encontrada');
     }
@@ -75,25 +75,26 @@ router.get('/:sigla/horarios', async (req, res) => {
 });
 
 
-// Nova rota para listar avaliações e datas de uma UC específica
+// Rota para listar avaliações e datas de uma UC específica
 router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
   try {
-    const data = await ucController.getAvaliacoesEDatasBySigla(req.params.sigla);
-    res.json(data);
+    const uc = await ucController.findBySigla(req.params.sigla);
+    if (uc) {
+      res.render('ucAvaliacoesDatas', { uc });
+    } else {
+      res.status(404).send('UC não encontrada');
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
 
+// Rota para listar docentes de uma UC específica
 router.get('/:sigla/docentes', async (req, res) => {
   try {
-    const uc = await ucController.findBySigla(req.params.sigla);
-    if (uc) {
-      res.json(uc.docentes);
-    } else {
-      res.status(404).send('UC não encontrada');
-    }
+    const docentes = await ucController.getDocentesBySigla(req.params.sigla);
+    res.render('ucDocentes', { sigla: req.params.sigla, docentes });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -110,21 +111,31 @@ router.get('/:sigla/aulas', async (req, res) => {
   }
 });
 
-// Nova rota para listar aulas teóricas de uma UC específica
-router.get('/:sigla/aulas/teoricas', async (req, res) => {
+// Rota para listar avaliações e datas de uma UC específica
+router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
   try {
-    const aulasTeoricas = await ucController.getAulasTeoricasBySigla(req.params.sigla);
-    res.json(aulasTeoricas);
+    const uc = await ucController.findBySigla(req.params.sigla);
+    res.render('ucAvaliacoesDatas', { uc });
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-// Nova rota para listar aulas práticas de uma UC específica
+// Rota para listar aulas práticas de uma UC específica
 router.get('/:sigla/aulas/praticas', async (req, res) => {
   try {
-    const aulasPraticas = await ucController.getAulasPraticasBySigla(req.params.sigla);
-    res.json(aulasPraticas);
+    const praticas = await ucController.getPraticasBySigla(req.params.sigla);
+    res.render('ucPraticas', { sigla: req.params.sigla, praticas });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Rota para listar aulas teóricas de uma UC específica
+router.get('/:sigla/aulas/teoricas', async (req, res) => {
+  try {
+    const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
+    res.render('ucTeoricas', { sigla: req.params.sigla, teoricas });
   } catch (error) {
     res.status(500).send(error.message);
   }

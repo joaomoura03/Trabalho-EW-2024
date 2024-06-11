@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title Lista de UCs
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      #main-header {
+        background: #333;
+        color: #fff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #0779e4 3px solid;
+      }
+      #main-header h1 {
+        text-align: center;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 24px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        background: #fff;
+        margin: 10px 0;
+        padding: 10px;
+        border-left: #0779e4 5px solid;
+      }
+      li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+      }
+      li a:hover {
+        color: #0779e4;
+      }
+  body
+    header#main-header
+      div.container
+        h1 Lista de Unidades Curriculares
+    div.container
+      ul
+        each uc in ucs
+          li
+            a(href=`/ucs/${uc.sigla}`) #{uc.titulo}
