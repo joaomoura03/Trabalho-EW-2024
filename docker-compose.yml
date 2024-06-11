@@ -11,10 +11,10 @@ services:
   mongo-seed-ucs:
     image: mongo:latest
     volumes:
-      - /home/joaomoura03/3ano2semestre/EW/Trabalho-EW-2024/datasets/ucs.json:/datasets/ucs.json
+      - /home/user/Desktop/3ºAno/EW/Trabalho-EW-2024/datasets/ucs.json:/datasets/ucs.json
     command: mongoimport --host mongodb -d UCS -c ucs --type json --file /datasets/ucs.json --jsonArray
   mongo-seed-users:
     image: mongo:latest
     volumes:
-      - /home/joaomoura03/3ano2semestre/EW/Trabalho-EW-2024/datasets/users.json:/datasets/users.json
+      - /home/user/Desktop/3ºAno/EW/Trabalho-EW-2024/datasets/users.json:/datasets/users.json
     command: mongoimport --host mongodb -d UCS -c users --type json --file /datasets/users.json --jsonArray
