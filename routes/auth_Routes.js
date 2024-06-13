@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth_Controller');
+const mongoose = require('mongoose');
 
 // Route for the login page
 router.get('/', (req, res) => {
@@ -21,7 +22,6 @@ router.post('/login', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
 // Route for the register page
 router.get('/register', (req, res) => {
   res.render('register');

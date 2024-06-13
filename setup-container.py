@@ -13,24 +13,43 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
+  mongo-drop:
+    image: mongo:latest
     depends_on:
-      - mongo-seed-ucs
-      - mongo-seed-users
+      - mongodb
+    entrypoint: |
+      /bin/bash -c '
+        echo "Dropping database..." &&
+        mongo mongodb://mongodb/{db_name} --eval "db.dropDatabase()"
+      '
   mongo-seed-ucs:
     image: mongo:latest
+    depends_on:
+      - mongo-drop
     volumes:
       - {ucs_json_path}:/datasets/ucs.json
-    command: mongoimport --host mongodb -d {db_name} -c ucs --type json --file /datasets/ucs.json --jsonArray
+    entrypoint: |
+      /bin/bash -c '
+        echo "Importing UCs..." &&
+        mongoimport --host mongodb -d {db_name} -c ucs --type json --file /datasets/ucs.json --jsonArray
+      '
   mongo-seed-users:
     image: mongo:latest
+    depends_on:
+      - mongo-drop
     volumes:
       - {users_json_path}:/datasets/users.json
-    command: mongoimport --host mongodb -d {db_name} -c users --type json --file /datasets/users.json --jsonArray
+    entrypoint: |
+      /bin/bash -c '
+        echo "Importing Users..." &&
+        mongoimport --host mongodb -d {db_name} -c users --type json --file /datasets/users.json --jsonArray
+      '
 """
     with open("docker-compose.yml", "w") as f:
         f.write(docker_compose_template)
 
 def start_container():
+    subprocess.run(["docker-compose", "down", "--remove-orphans"])
     subprocess.run(["docker-compose", "up", "-d"])
 
 if __name__ == "__main__":

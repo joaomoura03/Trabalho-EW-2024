@@ -5,16 +5,34 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
+  mongo-drop:
+    image: mongo:latest
     depends_on:
-      - mongo-seed-ucs
-      - mongo-seed-users
+      - mongodb
+    entrypoint: |
+      /bin/bash -c '
+        echo "Dropping database..." &&
+        mongo mongodb://mongodb/UCS --eval "db.dropDatabase()"
+      '
   mongo-seed-ucs:
     image: mongo:latest
+    depends_on:
+      - mongo-drop
     volumes:
-      - /home/joaomoura03/3ano2semestre/EW/Trabalho-EW-2024/datasets/ucs.json:/datasets/ucs.json
-    command: mongoimport --host mongodb -d UCS -c ucs --type json --file /datasets/ucs.json --jsonArray
+      - /home/user/Desktop/3ºAno/EW/Trabalho-EW-2024/datasets/ucs.json:/datasets/ucs.json
+    entrypoint: |
+      /bin/bash -c '
+        echo "Importing UCs..." &&
+        mongoimport --host mongodb -d UCS -c ucs --type json --file /datasets/ucs.json --jsonArray
+      '
   mongo-seed-users:
     image: mongo:latest
+    depends_on:
+      - mongo-drop
     volumes:
-      - /home/joaomoura03/3ano2semestre/EW/Trabalho-EW-2024/datasets/users.json:/datasets/users.json
-    command: mongoimport --host mongodb -d UCS -c users --type json --file /datasets/users.json --jsonArray
+      - /home/user/Desktop/3ºAno/EW/Trabalho-EW-2024/datasets/users.json:/datasets/users.json
+    entrypoint: |
+      /bin/bash -c '
+        echo "Importing Users..." &&
+        mongoimport --host mongodb -d UCS -c users --type json --file /datasets/users.json --jsonArray
+      '

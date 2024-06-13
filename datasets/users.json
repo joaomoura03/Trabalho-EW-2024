@@ -9,8 +9,8 @@
     "webpage": "https://github.com/Rcracel09",
     "role": "Aluno",
     "password": "1234",
-    "registrationDate": "2024-06-08T15:00:00Z",
-    "lastAccessDate": "2024-06-09T10:00:00Z"
+    "registrationDate": "2024-06-08T15:00:00.000Z",
+    "lastAccessDate": "2024-06-09T10:00:00.000Z"
   },
   {
     "_id": "2",
@@ -22,7 +22,20 @@
     "webpage": "http://www.di.uminho.pt/~jcr",
     "role": "Produtor",
     "password": "1234",
-    "registrationDate": "2024-06-08T15:00:00Z",
-    "lastAccessDate": "2024-06-09T10:00:00Z"
+    "registrationDate": "2024-06-08T15:00:00.000Z",
+    "lastAccessDate": "2024-06-09T10:00:00.000Z"
+  },
+  {
+    "_id": "666b716e2fa3e79ffc62ec14",
+    "nome": "Kiko",
+    "foto": "",
+    "categoria": "Aluno",
+    "filiacao": "Dep. Informática - Universidade do Minho",
+    "email": "kiko@gmail.com",
+    "webpage": "",
+    "role": "Aluno",
+    "password": "123",
+    "registrationDate": "2024-06-13T22:23:42.687Z",
+    "lastAccessDate": "2024-06-13T22:23:42.687Z"
   }
 ]
