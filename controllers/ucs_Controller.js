@@ -104,3 +104,51 @@ module.exports.addPratica = async (sigla, novaPratica) => {
     throw error;
   }
 }
+
+module.exports.addAvaliacao = async (sigla, novaAvaliacao) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $push: { avaliacao: novaAvaliacao } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports.updateDatas = async (sigla, datas) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $set: { datas: datas } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports.addAulasPratica = async (sigla, aula) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $push: { aulas: aula } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports.addAulasTeorica = async (sigla, novaTeorica) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $push: { aulas: novaTeorica } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}

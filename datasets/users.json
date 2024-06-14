@@ -37,5 +37,18 @@
     "password": "123",
     "registrationDate": "2024-06-13T22:23:42.687Z",
     "lastAccessDate": "2024-06-13T22:23:42.687Z"
+  },
+  {
+    "_id": "666c9453be61106902ddb956",
+    "nome": "1",
+    "foto": "",
+    "categoria": "Produtor",
+    "filiacao": "Dep. Informática - Universidade do Minho",
+    "email": "1@gmail.com",
+    "webpage": "",
+    "role": "Produtor",
+    "password": "1",
+    "registrationDate": "2024-06-14T19:04:51.223Z",
+    "lastAccessDate": "2024-06-14T19:04:51.223Z"
   }
 ]

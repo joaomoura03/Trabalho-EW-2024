@@ -41,6 +41,20 @@ html
         color: #333;
         border-bottom: 2px solid #0779e4;
         padding-bottom: 5px;
+        display: flex;
+        align-items: center;
+      }
+      .section h2 button {
+        background: #0779e4;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .section h2 button:hover {
+        background: #005bb5;
       }
       .section ul {
         list-style: none;
@@ -52,6 +66,29 @@ html
         padding: 10px;
         border-left: #0779e4 5px solid;
       }
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      form input,
+      form textarea {
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      form button {
+        background: #0779e4;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background: #005bb5;
+      }
   body
     header#main-header
       div.container
@@ -59,7 +96,9 @@ html
     div.container
       div.content
         .section
-          h2 Aulas Práticas
+          h2 
+            | Aulas Práticas
+            button(type="button", onclick="document.getElementById('aulaForm').style.display='block'") Adicionar Aula
           ul
             each pratica in praticas
               li
@@ -67,4 +106,9 @@ html
                 ul
                   each item in pratica.sumario
                     li #{item}
+          form#aulaForm(action=`/ucs/${sigla}/aulas/praticas`, method="POST", style="display:none")
+            input(type="hidden" name="type" value="pratica")
+            input(type="text" name="data" placeholder="Data da Aula")
+            textarea(name="sumario" placeholder="Sumário da Aula")
+            button(type="submit") Salvar Aula
         a(href=`/ucs/${sigla}`) Voltar
