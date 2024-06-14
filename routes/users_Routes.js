@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/users_Controller');
+const checkRole = require('../middlewares/checkRole');
 
 // Listar todos os usuários
-router.get('/', async (req, res) => {
+router.get('/', checkRole('Aluno'),async (req, res) => {
   try {
     const users = await userController.list();
     res.json(users);

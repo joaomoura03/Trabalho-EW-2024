@@ -3,31 +3,33 @@ const router = express.Router();
 const authController = require('../controllers/auth_Controller');
 const mongoose = require('mongoose');
 
-// Route for the login page
+// Rota para a página de login
 router.get('/', (req, res) => {
   res.render('login');
 });
 
-// Route for handling login form submission
+// Rota para o formulário de login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await authController.authenticate(email, password);
-    if (user) {
+    const token = await authController.authenticate(email, password);
+    if (token) {
+      res.cookie('token', token); // Configura o token JWT no cookie
       res.redirect('/ucs');
     } else {
-      res.status(401).send('Invalid credentials');
+      res.status(401).send('Credenciais inválidas');
     }
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
-// Route for the register page
+
+// Rota para a página de registro
 router.get('/register', (req, res) => {
   res.render('register');
 });
 
-// Route for handling register form submission
+// Rota para o formulário de registro
 router.post('/register', async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
   if (password === confirmPassword) {
@@ -39,9 +41,9 @@ router.post('/register', async (req, res) => {
         password: password,
         registrationDate: new Date(),
         lastAccessDate: new Date(),
-        role: 'Aluno',  // Default role, change as needed
-        categoria: 'Aluno',  // Default category, change as needed
-        filiacao: 'Dep. Informática - Universidade do Minho',  // Default affiliation, change as needed
+        role: 'Aluno',  // Papel padrão, altere conforme necessário
+        categoria: 'Aluno',  // Categoria padrão, altere conforme necessário
+        filiacao: 'Dep. Informática - Universidade do Minho',  // Filiação padrão, altere conforme necessário
         webpage: '',
         foto: ''
       };
@@ -51,7 +53,7 @@ router.post('/register', async (req, res) => {
       res.status(500).send(error.message);
     }
   } else {
-    res.status(400).send('Passwords do not match');
+    res.status(400).send('As senhas não coincidem');
   }
 });
 

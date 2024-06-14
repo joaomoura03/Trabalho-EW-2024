@@ -7,6 +7,8 @@ var logger = require('morgan');
 var authRouter = require('./routes/auth_Routes');
 var ucsRouter = require('./routes/ucs_Routes');
 var usersRouter = require('./routes/users_Routes');
+var authMiddleware = require('./middlewares/auth_verify'); // Certifique-se de ajustar o caminho conforme necessário
+var clearToken = require('./middlewares/clear_token');
 
 var app = express();
 
@@ -30,9 +32,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', authRouter);
-app.use('/ucs', ucsRouter);
-app.use('/users', usersRouter);
+app.use('/ucs', authMiddleware, ucsRouter);
+app.use('/users', authMiddleware, usersRouter);
+app.use('/', clearToken, authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
