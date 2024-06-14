@@ -27,6 +27,16 @@ html
         margin: 0;
         font-size: 24px;
       }
+      #main-header a {
+        color: #fff;
+        text-decoration: none;
+        background: #0779e4;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+      #main-header a:hover {
+        background: #005bb5;
+      }
       .content {
         background: #fff;
         padding: 20px;
@@ -56,6 +66,7 @@ html
     header#main-header
       div.container
         h1 Detalhes da UC #{uc.sigla}
+        a(href='/') Sair
     div.container
       div.content
         .section

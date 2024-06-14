@@ -80,3 +80,27 @@ module.exports.getDocentesBySigla = async (sigla) => {
     throw new Error('UC não encontrada');
   }
 }
+
+module.exports.addTeorica = async (sigla, novaTeorica) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $push: { 'horario.teoricas': novaTeorica } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports.addPratica = async (sigla, novaPratica) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $push: { 'horario.praticas': novaPratica } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}

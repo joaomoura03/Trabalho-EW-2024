@@ -17,7 +17,7 @@ router.get('/:sigla', async (req, res) => {
   try {
     const uc = await ucController.findBySigla(req.params.sigla);
     if (uc) {
-      res.render('ucDetalhes', { uc });
+      res.render('ucDetalhesAluno', { uc });
     } else {
       res.status(404).send('UC não encontrada');
     }
@@ -140,5 +140,22 @@ router.get('/:sigla/aulas/teoricas', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+// Adicionar nova aula
+router.post('/:sigla', async (req, res) => {
+  const { type, class: newClass } = req.body;
+  try {
+    if (type === 'teoricas') {
+      const result = await ucController.addTeorica(req.params.sigla, newClass);
+      res.redirect(`/ucs/${req.params.sigla}`);
+    } else if (type === 'praticas') {
+      const result = await ucController.addPratica(req.params.sigla, newClass);
+      res.redirect(`/ucs/${req.params.sigla}`);
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 
 module.exports = router;
