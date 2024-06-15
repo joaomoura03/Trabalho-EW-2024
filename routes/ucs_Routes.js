@@ -228,17 +228,49 @@ router.post('/:sigla/aulas/teoricas', async (req, res) => {
   }
 });
 
+// router.post('/', async (req, res) => {
+//   const { sigla, titulo, docentes } = req.body;
+//   const docenteArray = docentes.split(';').map(docente => {
+//     const [nome, foto, categoria, filiacao, email, webpage] = docente.split(',');
+//     return { nome, foto, categoria, filiacao, email, webpage };
+//   });
+
+//   const newUC = {
+//     sigla,
+//     titulo,
+//     docentes: docenteArray,
+//     horario: { teoricas: [], praticas: [] },
+//     avaliacao: [],
+//     datas: { teste: "", exame: "", projeto: "" },
+//     aulas: []
+//   };
+
+//   try {
+//     const uc = await ucController.insert(newUC);
+//     res.redirect('/ucs');
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// });
+
+
 router.post('/', async (req, res) => {
-  const { sigla, titulo, docentes } = req.body;
-  const docenteArray = docentes.split(';').map(docente => {
-    const [nome, foto, categoria, filiacao, email, webpage] = docente.split(',');
-    return { nome, foto, categoria, filiacao, email, webpage };
-  });
+  const { sigla, titulo } = req.body;
+
+  // Assuming req.user contains the logged-in user's details
+  const loggedInDocente = {
+    nome: req.user.nome,
+    foto: req.user.foto || "",  // Default to an empty string if no photo is provided
+    categoria: req.user.categoria || "",  // Default to an empty string if no category is provided
+    filiacao: req.user.filiacao || "",  // Default to an empty string if no affiliation is provided
+    email: req.user.email,
+    webpage: req.user.webpage || ""  // Default to an empty string if no webpage is provided
+  };
 
   const newUC = {
     sigla,
     titulo,
-    docentes: docenteArray,
+    docentes: [loggedInDocente],
     horario: { teoricas: [], praticas: [] },
     avaliacao: [],
     datas: { teste: "", exame: "", projeto: "" },
@@ -252,5 +284,6 @@ router.post('/', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 module.exports = router;
