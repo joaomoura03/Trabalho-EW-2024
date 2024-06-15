@@ -5,10 +5,10 @@
     "foto": "foto_Daniel.jpeg",
     "categoria": "Aluno",
     "filiacao": "Dep. Informática - Universidade do Minho",
-    "email": "100661@alunos.uminho.pt",
+    "email": "daniel@gmail.com",
     "webpage": "https://github.com/Rcracel09",
-    "role": "Aluno",
-    "password": "1234",
+    "role": "Admin",
+    "password": "123",
     "registrationDate": "2024-06-08T15:00:00.000Z",
     "lastAccessDate": "2024-06-09T10:00:00.000Z"
   },

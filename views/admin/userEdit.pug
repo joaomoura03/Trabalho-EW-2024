@@ -35,7 +35,7 @@ html
         padding-left: 20px;
       }
       .nav-button-left2 {
-        margin-right: 10px; /* Ajusta a margem para criar espaço entre os botões */
+        margin-right: 10px;
         padding-left: 20px;
       }
       .nav-button-right {
@@ -113,7 +113,7 @@ html
         a(href='/') Sair
     div.container
       .profile-card
-        form(action=`/users/profile` method="POST" class="user-form")
+        form(action=`/users/${user._id}` method="POST" class="user-form")
           h2 #{user.nome}
           p
             strong Nome:
@@ -138,7 +138,8 @@ html
             input.edit-field(type="text" name="webpage" value=`${user.webpage}`)
           p
             strong Papel:
-            | #{user.role}
+            span.static-field #{user.role}
+            input.edit-field(type="role" name="role" value=`${user.role}`)
           p
             strong Data de Registro:
             | #{user.registrationDate}

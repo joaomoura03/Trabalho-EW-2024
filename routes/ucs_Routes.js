@@ -6,7 +6,7 @@ const ucController = require('../controllers/ucs_Controller');
 router.get('/', async (req, res) => {
   try {
     const ucs = await ucController.list();
-    res.render('ucs', { ucs });
+    res.render('ucs', { ucs, role: req.user.role });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -20,7 +20,7 @@ router.get('/:sigla', async (req, res) => {
     if (uc) {
       if (req.user.role === 'Aluno') {
         res.render('aluno/ucDetalhesAluno', { uc });
-      } else if (req.user.role === 'Produtor') {
+      } else if (req.user.role === 'Produtor' || req.user.role === 'Admin')  {
         res.render('professor/ucDetalhesProf', { uc });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
@@ -36,8 +36,8 @@ router.get('/:sigla', async (req, res) => {
 // Inserir uma nova UC
 router.post('/', async (req, res) => {
   try {
-    const uc = await ucController.insert(req.body);
-    res.status(201).json(uc);
+    // const uc = await ucController.insert(req.body);
+    // res.status(201).json(uc);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -89,7 +89,7 @@ router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
     if (uc) {
       if (req.user.role === 'Aluno') {
         res.render('aluno/ucAvaliacoesDatas', { uc });
-      } else if (req.user.role === 'Produtor') {
+      } else if (req.user.role === 'Produtor' || req.user.role === 'Admin') {
         res.render('professor/ucAvaliacoesDatasProf', { uc });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');

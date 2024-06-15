@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Lista de UCs
+    title Lista de Usuários
     style.
       body {
         font-family: Arial, sans-serif;
@@ -34,26 +34,18 @@ html
         margin-right: auto;
         padding-left: 20px;
       }
-      .nav-button-left2 {
-        margin-right: 10px;
-        padding-left: 20px;
-      }
-      .nav-button-left3 {
-        margin-right: 10px;
-        padding-left: 10%;
-      }
       .nav-button-right {
         margin-left: auto;
         padding-right: 20px;
       }
-      .nav-button-left a, .nav-button-left2 a, .nav-button-left3 a, .nav-button-right a {
+      .nav-button-left a, .nav-button-right a {
         color: #fff;
         text-decoration: none;
         background: #0779e4;
         padding: 10px 20px;
         border-radius: 5px;
       }
-      .nav-button-left a:hover, .nav-button-left2 a:hover, .nav-button-left3 a:hover, .nav-button-right a:hover {
+      .nav-button-left a:hover, .nav-button-right a:hover {
         background: #005bb5;
       }
       ul {
@@ -74,32 +66,15 @@ html
       li a:hover {
         color: #0779e4;
       }
-      .hidden-form {
-        display: none;
-      }
-      .visible-form {
-        display: block;
-      }
   body
     header#main-header
       .nav-button-left
-        a(href='/users/profile') Perfil
-      if role === 'Admin' || role === 'Produtor'
-        .nav-button-left2 
-          a(href='/users') Users
-      h1 Lista de Unidades Curriculares
+        a(href='/ucs') UCs
+      h1 Lista de Usuários
       .nav-button-right
         a(href='/') Sair
     div.container
       ul
-        each uc in ucs
+        each user in users
           li
-            a(href=`/ucs/${uc.sigla}`) #{uc.titulo}
-    if role === 'Admin' || role === 'Produtor'
-      .nav-button-left3
-        a(href="#", onclick="document.getElementById('avaliacaoForm').classList.remove('hidden-form'); document.getElementById('addUcButton').classList.add('hidden-form');") Adicionar UC
-      form#avaliacaoForm(action=`/ucs/`, method="POST", class="hidden-form")
-        input(type="hidden" name="type" value="avaliacao")
-        input(type="text" name="class" placeholder="Nova UC")
-        button(type="submit") Salvar UC
-        a(href="#", onclick="document.getElementById('avaliacaoForm').classList.add('hidden-form'); document.getElementById('addUcButton').classList.remove('hidden-form');") Cancelar
+            a(href=`/users/${user._id}`) #{user.nome}

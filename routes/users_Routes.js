@@ -4,10 +4,10 @@ const userController = require('../controllers/users_Controller');
 const checkRole = require('../middlewares/checkRole');
 
 // Listar todos os usuários
-router.get('/', checkRole('Aluno'),async (req, res) => {
+router.get('/', checkRole('Admin'), async (req, res) => {
   try {
     const users = await userController.list();
-    res.json(users);
+    res.render('admin/usersRole', { users });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -17,7 +17,7 @@ router.get('/profile', async (req, res) => {
   try {
     const user = await userController.findUserByIdPerfil(req.user.id); // Utiliza o id do token
     if (user) {
-      res.render('userProfile', { user });
+      res.render('userProfile', { user, role: req.user.role });
     } else {
       res.status(404).send('Usuário não encontrado');
     }
@@ -36,11 +36,13 @@ router.post('/profile', async (req, res) => {
 });
 
 // Rota para retornar informações específicas de um usuário
-router.get('/:id', async (req, res) => {
+router.get('/:id', checkRole('Admin'),async (req, res) => {
   try {
-    const user = await userController.findUserById(req.params.id);
-    if (user) {
-      res.json(user);
+    const user = await userController.findUserByIdPerfil(req.params.id);
+    if (user && req.params.id == req.user.id) {
+      res.render('userProfile', { user, role: req.user.role  });
+    }else if(user) {
+      res.render('admin/userEdit', { user, role: req.user.role });
     } else {
       res.status(404).send('Usuário não encontrado');
     }
@@ -48,6 +50,16 @@ router.get('/:id', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+router.post('/:id', async (req, res) => {
+  try {
+    await userController.update(req.params.id, req.body);
+    res.redirect('/users/');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 
 // Inserir um novo usuário
 router.post('/', async (req, res) => {

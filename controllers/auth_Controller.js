@@ -6,6 +6,8 @@ const SECRET_KEY = 'your_secret_key'; // Altere para a sua chave secreta
 module.exports.authenticate = async (email, password) => {
   const user = await User.findOne({ email, password }).exec();
   if (user) {
+    user.lastAccessDate = new Date();
+    await user.save();
     const token = jwt.sign({
       id: user._id,
       role: user.role
