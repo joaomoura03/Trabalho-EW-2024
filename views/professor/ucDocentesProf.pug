@@ -1,0 +1,117 @@
+doctype html
+html
+  head
+    title Docentes da UC #{sigla}
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      #main-header {
+        background: #333;
+        color: #fff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #0779e4 3px solid;
+      }
+      #main-header h1 {
+        text-align: center;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .section {
+        margin-bottom: 20px;
+      }
+      .section h2 {
+        color: #333;
+        border-bottom: 2px solid #0779e4;
+        padding-bottom: 5px;
+      }
+      .section ul {
+        list-style: none;
+        padding: 0;
+      }
+      .section li {
+        background: #f4f4f4;
+        margin: 10px 0;
+        padding: 10px;
+        border-left: #0779e4 5px solid;
+      }
+      .section button {
+        background: #0779e4;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .section button:hover {
+        background: #005bb5;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      form input,
+      form textarea {
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      form button {
+        background: #0779e4;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background: #005bb5;
+      }
+  body
+    header#main-header
+      div.container
+        h1 Docentes da UC #{sigla}
+    div.container
+      div.content
+        .section
+          h2 Docentes
+          ul
+            each docente in docentes
+              li
+                p Nome: #{docente.nome}
+                p Categoria: #{docente.categoria}
+                p Filiacão: #{docente.filiacao}
+                p Email: #{docente.email}
+                if docente.webpage
+                  p Webpage: 
+                    a(href=docente.webpage) #{docente.webpage}
+        .section
+          button(type="button", onclick="document.getElementById('docenteForm').style.display='block'") Adicionar Docente
+          form#docenteForm(action=`/ucs/${sigla}/docentes`, method="POST", style="display:none")
+            input(type="text" name="nome" placeholder="Nome do docente")
+            input(type="text" name="foto" placeholder="Foto URL")
+            input(type="text" name="categoria" placeholder="Categoria")
+            input(type="text" name="filiacao" placeholder="Filiação")
+            input(type="email" name="email" placeholder="Email")
+            input(type="text" name="webpage" placeholder="Webpage URL")
+            button(type="submit") Salvar Docente
+        a(href=`/ucs/${sigla}`) Voltar

@@ -108,8 +108,16 @@ router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
 // Rota para listar docentes de uma UC específica
 router.get('/:sigla/docentes', async (req, res) => {
   try {
-    const docentes = await ucController.getDocentesBySigla(req.params.sigla);
-    res.render('ucDocentes', { sigla: req.params.sigla, docentes });
+    if (req.user.role === 'Aluno') {
+      const docentes = await ucController.getDocentesBySigla(req.params.sigla);
+      res.render('aluno/ucDocentes', { sigla: req.params.sigla, docentes });
+    } else if (req.user.role === 'Docente' || req.user.role === 'Admin') {
+      const docentes = await ucController.getDocentesBySigla(req.params.sigla);
+      res.render('professor/ucDocentesProf', { sigla: req.params.sigla, docentes });
+    } else {
+      res.status(403).send('Access denied. You do not have the required role.');
+    }
+    
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -258,6 +266,20 @@ router.post('/', async (req, res) => {
 
     const uc = await ucController.insert(newUC);
     res.redirect('/ucs');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+// Adicionar novo docente a uma UC
+router.post('/:sigla/docentes', async (req, res) => {
+  const { nome, foto, categoria, filiacao, email, webpage } = req.body;
+  const newDocente = { nome, foto, categoria, filiacao, email, webpage };
+
+  try {
+    const result = await ucController.addDocente(req.params.sigla, newDocente);
+    res.redirect(`/ucs/${req.params.sigla}/docentes`);
   } catch (error) {
     res.status(500).send(error.message);
   }

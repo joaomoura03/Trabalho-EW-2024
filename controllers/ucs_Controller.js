@@ -152,3 +152,15 @@ module.exports.addAulasTeorica = async (sigla, novaTeorica) => {
     throw error;
   }
 }
+
+module.exports.addDocente = async (sigla, newDocente) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $push: { docentes: newDocente } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
