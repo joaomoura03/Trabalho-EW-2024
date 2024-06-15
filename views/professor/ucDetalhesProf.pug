@@ -104,6 +104,16 @@ html
       form button:hover {
         background: #005bb5;
       }
+      .buttonremove button{
+        background: #0779e4;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+
   body
     header#main-header
       div.container
@@ -112,6 +122,8 @@ html
     div.container
       div.content
         .section
+          .buttonremove
+            button.remove-button(type="button", onclick="if(confirm('Tem certeza que deseja remover esta UC?')) { window.location.href = `/ucs/${sigla}/remover`; }") Remover UC
           h2 Título
           p #{uc.titulo}
         .section 

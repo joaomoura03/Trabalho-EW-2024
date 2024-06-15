@@ -14,41 +14,57 @@ html
       }
       .register-container {
         background: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 40px; /* Aumenta o padding para uma caixa maior */
+        border-radius: 10px; /* Aumenta o border-radius para uma borda mais arredondada */
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Aumenta o shadow para uma sombra mais perceptível */
         width: 100%;
-        max-width: 400px;
+        max-width: 600px; /* Aumenta a largura máxima da caixa */
         text-align: center;
       }
       .register-container h2 {
-        margin-bottom: 20px;
+        margin-bottom: 30px; /* Aumenta o espaçamento abaixo do título */
         color: #333;
       }
       .register-container input {
         width: 100%;
-        padding: 10px;
-        margin: 10px 0;
+        padding: 15px; /* Aumenta o padding dos inputs */
+        margin: 15px 0; /* Aumenta o espaçamento entre os inputs */
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
       }
       .register-container button {
         width: 100%;
-        padding: 10px;
+        padding: 15px; /* Aumenta o padding do botão */
         background: #0779e4;
         color: #fff;
         border: none;
         border-radius: 5px;
         cursor: pointer;
         box-sizing: border-box;
+        font-size: 16px; /* Aumenta o tamanho da fonte */
       }
       .register-container button:hover {
         background: #005bb5;
       }
+      .register-container .login-button {
+        width: 100%;
+        padding: 15px; /* Aumenta o padding do botão de login */
+        background: #ccc;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-top: 15px; /* Aumenta o espaçamento acima do botão de login */
+        font-size: 16px; /* Aumenta o tamanho da fonte */
+      }
+      .register-container .login-button:hover {
+        background: #aaa;
+      }
       .register-container a {
-        margin-top: 10px;
-        color: #0779e4;
+        margin-top: 15px; /* Aumenta o espaçamento acima do link */
+        color: #333;
         text-decoration: none;
       }
       .register-container a:hover {
@@ -63,4 +79,5 @@ html
         input(type="password" name="password" placeholder="Password" required)
         input(type="password" name="confirmPassword" placeholder="Confirm Password" required)
         button(type="submit") Register
-      a(href='/') Login
+      a(href='/')
+        button.login-button Login
