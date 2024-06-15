@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ucController = require('../controllers/ucs_Controller');
+const userController = require('../controllers/users_Controller');
 
 // Listar todas as UCs
 router.get('/', async (req, res) => {
@@ -132,7 +133,7 @@ router.get('/:sigla/aulas/praticas', async (req, res) => {
     if (req.user.role === 'Aluno') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
       res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas });
-    } else if (req.user.role === 'Docente') {
+    } else if (req.user.role === 'Docente' || req.user.role === 'Admin') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
       res.render('professor/ucPraticasProf', { sigla: req.params.sigla, praticas });
     } else {
@@ -149,7 +150,7 @@ router.get('/:sigla/aulas/teoricas', async (req, res) => {
     if (req.user.role === 'Aluno') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
       res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas });
-    } else if (req.user.role === 'Docente') {
+    } else if (req.user.role === 'Docente' || req.user.role === 'Admin') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
       res.render('professor/ucTeoricasProf', { sigla: req.params.sigla, teoricas });
     } else {
@@ -228,56 +229,33 @@ router.post('/:sigla/aulas/teoricas', async (req, res) => {
   }
 });
 
-// router.post('/', async (req, res) => {
-//   const { sigla, titulo, docentes } = req.body;
-//   const docenteArray = docentes.split(';').map(docente => {
-//     const [nome, foto, categoria, filiacao, email, webpage] = docente.split(',');
-//     return { nome, foto, categoria, filiacao, email, webpage };
-//   });
-
-//   const newUC = {
-//     sigla,
-//     titulo,
-//     docentes: docenteArray,
-//     horario: { teoricas: [], praticas: [] },
-//     avaliacao: [],
-//     datas: { teste: "", exame: "", projeto: "" },
-//     aulas: []
-//   };
-
-//   try {
-//     const uc = await ucController.insert(newUC);
-//     res.redirect('/ucs');
-//   } catch (error) {
-//     res.status(500).send(error.message);
-//   }
-// });
-
 
 router.post('/', async (req, res) => {
   const { sigla, titulo } = req.body;
 
-  // Assuming req.user contains the logged-in user's details
-  const loggedInDocente = {
-    nome: req.user.nome,
-    foto: req.user.foto || "",  // Default to an empty string if no photo is provided
-    categoria: req.user.categoria || "",  // Default to an empty string if no category is provided
-    filiacao: req.user.filiacao || "",  // Default to an empty string if no affiliation is provided
-    email: req.user.email,
-    webpage: req.user.webpage || ""  // Default to an empty string if no webpage is provided
-  };
-
-  const newUC = {
-    sigla,
-    titulo,
-    docentes: [loggedInDocente],
-    horario: { teoricas: [], praticas: [] },
-    avaliacao: [],
-    datas: { teste: "", exame: "", projeto: "" },
-    aulas: []
-  };
-
   try {
+    // Busque os detalhes completos do usuário logado
+    const loggedInUser = await userController.findUserByIdPerfil(req.user.id);
+
+    const loggedInDocente = {
+      nome: loggedInUser.nome,
+      foto: loggedInUser.foto || "",  // Padrão para string vazia se não houver foto
+      categoria: loggedInUser.categoria || "",  // Padrão para string vazia se não houver categoria
+      filiacao: loggedInUser.filiacao || "",  // Padrão para string vazia se não houver filiação
+      email: loggedInUser.email,
+      webpage: loggedInUser.webpage || ""  // Padrão para string vazia se não houver webpage
+    };
+
+    const newUC = {
+      sigla,
+      titulo,
+      docentes: [loggedInDocente],
+      horario: { teoricas: [], praticas: [] },
+      avaliacao: [],
+      datas: { teste: "", exame: "", projeto: "" },
+      aulas: []
+    };
+
     const uc = await ucController.insert(newUC);
     res.redirect('/ucs');
   } catch (error) {
