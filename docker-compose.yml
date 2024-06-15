@@ -19,7 +19,7 @@ services:
     depends_on:
       - mongo-drop
     volumes:
-      - /home/user/Desktop/3ºAno/EW/Trabalho-EW-2024/datasets/ucs.json:/datasets/ucs.json
+      - /home/joaomoura03/3ano2semestre/EW/Trabalho-EW-2024/datasets/ucs.json:/datasets/ucs.json
     entrypoint: |
       /bin/bash -c '
         echo "Importing UCs..." &&
@@ -30,7 +30,7 @@ services:
     depends_on:
       - mongo-drop
     volumes:
-      - /home/user/Desktop/3ºAno/EW/Trabalho-EW-2024/datasets/users.json:/datasets/users.json
+      - /home/joaomoura03/3ano2semestre/EW/Trabalho-EW-2024/datasets/users.json:/datasets/users.json
     entrypoint: |
       /bin/bash -c '
         echo "Importing Users..." &&

@@ -20,7 +20,7 @@ router.get('/:sigla', async (req, res) => {
     if (uc) {
       if (req.user.role === 'Aluno') {
         res.render('aluno/ucDetalhesAluno', { uc });
-      } else if (req.user.role === 'Produtor' || req.user.role === 'Admin')  {
+      } else if (req.user.role === 'Docente' || req.user.role === 'Admin')  {
         res.render('professor/ucDetalhesProf', { uc });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
@@ -33,15 +33,15 @@ router.get('/:sigla', async (req, res) => {
   }
 });
 
-// Inserir uma nova UC
-router.post('/', async (req, res) => {
-  try {
-    // const uc = await ucController.insert(req.body);
-    // res.status(201).json(uc);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
+// // Inserir uma nova UC
+// router.post('/', async (req, res) => {
+//   try {
+//     // const uc = await ucController.insert(req.body);
+//     // res.status(201).json(uc);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// });
 
 // Atualizar uma UC pela sigla
 router.put('/:sigla', async (req, res) => {
@@ -89,7 +89,7 @@ router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
     if (uc) {
       if (req.user.role === 'Aluno') {
         res.render('aluno/ucAvaliacoesDatas', { uc });
-      } else if (req.user.role === 'Produtor' || req.user.role === 'Admin') {
+      } else if (req.user.role === 'Docente' || req.user.role === 'Admin') {
         res.render('professor/ucAvaliacoesDatasProf', { uc });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
@@ -132,7 +132,7 @@ router.get('/:sigla/aulas/praticas', async (req, res) => {
     if (req.user.role === 'Aluno') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
       res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas });
-    } else if (req.user.role === 'Produtor') {
+    } else if (req.user.role === 'Docente') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
       res.render('professor/ucPraticasProf', { sigla: req.params.sigla, praticas });
     } else {
@@ -149,7 +149,7 @@ router.get('/:sigla/aulas/teoricas', async (req, res) => {
     if (req.user.role === 'Aluno') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
       res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas });
-    } else if (req.user.role === 'Produtor') {
+    } else if (req.user.role === 'Docente') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
       res.render('professor/ucTeoricasProf', { sigla: req.params.sigla, teoricas });
     } else {
@@ -178,7 +178,7 @@ router.post('/:sigla', async (req, res) => {
 
 // if (req.user.role === 'Aluno') {
 //   res.render('ucs', { ucs });
-// } else if (req.user.role === 'Produtor') {
+// } else if (req.user.role === 'Docente') {
 //   res.render('register', { ucs });
 // } else {
 //   res.status(403).send('Access denied. You do not have the required role.');
@@ -223,6 +223,31 @@ router.post('/:sigla/aulas/teoricas', async (req, res) => {
   try {
     const result = await ucController.addAulasTeorica(req.params.sigla, aula);
     res.redirect(`/ucs/${req.params.sigla}/aulas/teoricas`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.post('/', async (req, res) => {
+  const { sigla, titulo, docentes } = req.body;
+  const docenteArray = docentes.split(';').map(docente => {
+    const [nome, foto, categoria, filiacao, email, webpage] = docente.split(',');
+    return { nome, foto, categoria, filiacao, email, webpage };
+  });
+
+  const newUC = {
+    sigla,
+    titulo,
+    docentes: docenteArray,
+    horario: { teoricas: [], praticas: [] },
+    avaliacao: [],
+    datas: { teste: "", exame: "", projeto: "" },
+    aulas: []
+  };
+
+  try {
+    const uc = await ucController.insert(newUC);
+    res.redirect('/ucs');
   } catch (error) {
     res.status(500).send(error.message);
   }

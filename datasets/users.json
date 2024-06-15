@@ -20,7 +20,7 @@
     "filiacao": "Dep. Informática - Universidade do Minho",
     "email": "jcr@di.uminho.pt",
     "webpage": "http://www.di.uminho.pt/~jcr",
-    "role": "Produtor",
+    "role": "Docente",
     "password": "1234",
     "registrationDate": "2024-06-08T15:00:00.000Z",
     "lastAccessDate": "2024-06-09T10:00:00.000Z"
@@ -42,13 +42,26 @@
     "_id": "666c9453be61106902ddb956",
     "nome": "1",
     "foto": "",
-    "categoria": "Produtor",
+    "categoria": "Docente",
     "filiacao": "Dep. Informática - Universidade do Minho",
     "email": "1@gmail.com",
     "webpage": "",
-    "role": "Produtor",
+    "role": "Docente",
     "password": "1",
     "registrationDate": "2024-06-14T19:04:51.223Z",
     "lastAccessDate": "2024-06-14T19:04:51.223Z"
+  },
+  {
+    "_id": "3",
+    "nome": "João Miguel Mendes Moura",
+    "foto": "foto_Moura.jpeg",
+    "categoria": "Aluno",
+    "filiacao": "Dep. Informática - Universidade do Minho",
+    "email": "moura@gmail.com",
+    "webpage": "https://github.com/joamoura03",
+    "role": "Admin",
+    "password": "123",
+    "registrationDate": "2024-06-08T15:00:00.000Z",
+    "lastAccessDate": "2024-06-09T10:00:00.000Z"
   }
 ]
