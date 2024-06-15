@@ -1,0 +1,147 @@
+doctype html
+html
+  head
+    title Detalhes do Usuário
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      #main-header {
+        background: #333;
+        color: #fff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #0779e4 3px solid;
+        display: flex;
+        align-items: center;
+      }
+      #main-header h1 {
+        flex-grow: 1;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 24px;
+      }
+      .nav-button-left {
+        margin-right: auto;
+        padding-left: 20px;
+      }
+      .nav-button-right {
+        margin-left: auto;
+        padding-right: 20px;
+      }
+      .nav-button-left a, .nav-button-right a {
+        color: #fff;
+        text-decoration: none;
+        background: #0779e4;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+      .nav-button-left a:hover, .nav-button-right a:hover {
+        background: #005bb5;
+      }
+      .profile-card {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+      .profile-card h2 {
+        margin: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      .profile-card p {
+        margin: 10px 0;
+        /*display: flex;
+        align-items: center;*/
+      }
+      
+      .profile-card p strong {
+        width: 150px;
+      }
+      .edit-button, .save-button, .cancel-button {
+        background: #0779e4;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      .edit-button:hover, .save-button:hover, .cancel-button:hover {
+        background: #005bb5;
+      }
+      .edit-field {
+        display: none;
+      }
+      .edit-mode .edit-field {
+        display: inline-block;
+      }
+      .edit-mode .static-field {
+        display: none;
+      }
+      .save-button, .cancel-button {
+        display: none;
+      }
+      .edit-mode .save-button, .edit-mode .cancel-button {
+        display: inline-block;
+      }
+      .edit-mode .edit-button {
+        display: none;
+      }
+  body
+    header#main-header
+      .nav-button-left
+        a(href='/ucs') UCs
+      h1 Detalhes do Usuário
+      .nav-button-right
+        a(href='/') Sair
+    div.container
+      .profile-card
+        form(action=`/users/profile` method="POST" class="user-form")
+          h2 #{user.nome}
+          p
+            strong Nome:
+            span.static-field #{user.nome}
+            input.edit-field(type="text" name="nome" value=`${user.nome}`)
+          p
+            strong Categoria:
+            span.static-field #{user.categoria}
+            input.edit-field(type="text" name="categoria" value=`${user.categoria}`)
+          p
+            strong Filiação:
+            span.static-field #{user.filiacao}
+            input.edit-field(type="text" name="filiacao" value=`${user.filiacao}`)
+          p
+            strong Email:
+            span.static-field #{user.email}
+            input.edit-field(type="email" name="email" value=`${user.email}`)
+          p
+            strong Webpage:
+            span.static-field
+              a(href=user.webpage) #{user.webpage}
+            input.edit-field(type="text" name="webpage" value=`${user.webpage}`)
+          p
+            strong Papel:
+            | #{user.role}
+          p
+            strong Data de Registro:
+            | #{user.registrationDate}
+          p
+            strong Último Acesso:
+            | #{user.lastAccessDate}
+          p.button-row
+            button.edit-button(type="button", onclick="document.querySelector('.user-form').classList.add('edit-mode')") Editar
+            button.save-button(type="submit") Salvar
+            button.cancel-button(type="button", onclick="document.querySelector('.user-form').classList.remove('edit-mode')") Cancelar

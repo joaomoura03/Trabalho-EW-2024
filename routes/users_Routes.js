@@ -13,6 +13,28 @@ router.get('/', checkRole('Aluno'),async (req, res) => {
   }
 });
 
+router.get('/profile', async (req, res) => {
+  try {
+    const user = await userController.findUserByIdPerfil(req.user.id); // Utiliza o id do token
+    if (user) {
+      res.render('userProfile', { user });
+    } else {
+      res.status(404).send('Usuário não encontrado');
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.post('/profile', async (req, res) => {
+  try {
+    await userController.update(req.user.id, req.body); // Assuming req.user is set by auth middleware
+    res.redirect('/users/profile');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 // Rota para retornar informações específicas de um usuário
 router.get('/:id', async (req, res) => {
   try {
@@ -64,5 +86,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+
 
 module.exports = router;

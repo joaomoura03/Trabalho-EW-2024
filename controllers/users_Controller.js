@@ -27,3 +27,7 @@ module.exports.update = (id, user) => {
 module.exports.findUserById = async (id) => {
   return await User.findById(id).select('nome foto categoria filiacao email webpage registrationDate').exec();
 }
+
+module.exports.findUserByIdPerfil = async (id) => {
+  return await User.findById(id).select('-password').exec();
+};
