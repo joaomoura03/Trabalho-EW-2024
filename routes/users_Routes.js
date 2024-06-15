@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/users_Controller');
 const checkRole = require('../middlewares/checkRole');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'public', 'fileStore'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Listar todos os usuários
 router.get('/', checkRole('Admin'), async (req, res) => {
@@ -26,9 +40,13 @@ router.get('/profile', async (req, res) => {
   }
 });
 
-router.post('/profile', async (req, res) => {
+router.post('/profile', upload.single('foto'), async (req, res) => {
   try {
-    await userController.update(req.user.id, req.body); // Assuming req.user is set by auth middleware
+    const updatedData = req.body;
+    if (req.file) {
+      updatedData.foto = req.file.filename;
+    }
+    await userController.updateProfile(req.user.id, updatedData, req.file); // Assuming req.user is set by auth middleware
     res.redirect('/users/profile');
   } catch (error) {
     res.status(500).send(error.message);

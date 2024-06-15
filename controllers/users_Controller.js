@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const User = require('../models/users_Model');
 
 module.exports.list = async () => {
@@ -30,4 +32,19 @@ module.exports.findUserById = async (id) => {
 
 module.exports.findUserByIdPerfil = async (id) => {
   return await User.findById(id).select('-password').exec();
+};
+
+module.exports.updateProfile = async (id, userData, file) => {
+  if (file) {
+    // Delete old photo if it exists
+    const user = await User.findById(id);
+    if (user && user.foto) {
+      fs.unlinkSync(path.join(__dirname, '..', 'public', 'fileStore', user.foto));
+    }
+
+    // Set new photo path
+    userData.foto = file.filename;
+  }
+
+  return User.updateOne({ _id: id }, userData);
 };

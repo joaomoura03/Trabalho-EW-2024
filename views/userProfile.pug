@@ -113,7 +113,9 @@ html
         a(href='/') Sair
     div.container
       .profile-card
-        form(action=`/users/profile` method="POST" class="user-form")
+        if user.foto
+          img(src=`/fileStore/${user.foto}` alt="Foto do Usuário" width="150" height="150")
+        form(action=`/users/profile` method="POST" class="user-form" enctype="multipart/form-data")
           h2 #{user.nome}
           p
             strong Nome:
@@ -145,6 +147,9 @@ html
           p
             strong Último Acesso:
             | #{user.lastAccessDate}
+          p.edit-field
+            strong Foto:
+            input(type="file" name="foto" accept="image/*")
           p.button-row
             button.edit-button(type="button", onclick="document.querySelector('.user-form').classList.add('edit-mode')") Editar
             button.save-button(type="submit") Salvar
