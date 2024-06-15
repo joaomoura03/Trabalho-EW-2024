@@ -19,9 +19,9 @@ router.get('/:sigla', async (req, res) => {
     const uc = await ucController.findBySigla(req.params.sigla);
     if (uc) {
       if (req.user.role === 'Aluno') {
-        res.render('ucDetalhesAluno', { uc });
+        res.render('aluno/ucDetalhesAluno', { uc });
       } else if (req.user.role === 'Produtor') {
-        res.render('ucDetalhesProf', { uc });
+        res.render('professor/ucDetalhesProf', { uc });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
       }
@@ -88,9 +88,9 @@ router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
     const uc = await ucController.findBySigla(req.params.sigla);
     if (uc) {
       if (req.user.role === 'Aluno') {
-        res.render('ucAvaliacoesDatas', { uc });
+        res.render('aluno/ucAvaliacoesDatas', { uc });
       } else if (req.user.role === 'Produtor') {
-        res.render('ucAvaliacoesDatasProf', { uc });
+        res.render('professor/ucAvaliacoesDatasProf', { uc });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
       }
@@ -131,10 +131,10 @@ router.get('/:sigla/aulas/praticas', async (req, res) => {
   try {
     if (req.user.role === 'Aluno') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
-      res.render('ucPraticas', { sigla: req.params.sigla, praticas });
+      res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas });
     } else if (req.user.role === 'Produtor') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
-      res.render('ucPraticasProf', { sigla: req.params.sigla, praticas });
+      res.render('professor/ucPraticasProf', { sigla: req.params.sigla, praticas });
     } else {
       res.status(403).send('Access denied. You do not have the required role.');
     }
@@ -148,10 +148,10 @@ router.get('/:sigla/aulas/teoricas', async (req, res) => {
   try {
     if (req.user.role === 'Aluno') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
-      res.render('ucTeoricas', { sigla: req.params.sigla, teoricas });
+      res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas });
     } else if (req.user.role === 'Produtor') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
-      res.render('ucTeoricasProf', { sigla: req.params.sigla, teoricas });
+      res.render('professor/ucTeoricasProf', { sigla: req.params.sigla, teoricas });
     } else {
       res.status(403).send('Access denied. You do not have the required role.');
     }
