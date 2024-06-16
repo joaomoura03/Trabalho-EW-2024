@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Detalhes da UC
+    title Detalhes da UC #{uc.sigla}
     style.
       body {
         font-family: Arial, sans-serif;
@@ -17,27 +17,43 @@ html
       #main-header {
         background: #333;
         color: #fff;
-        padding: 10px 20px;
+        padding-top: 30px;
         min-height: 70px;
         border-bottom: #0779e4 3px solid;
         display: flex;
-        justify-content: space-between;
         align-items: center;
       }
       #main-header h1 {
+        flex-grow: 1;
         text-align: center;
         text-transform: uppercase;
         margin: 0;
         font-size: 24px;
       }
-      #main-header a {
+      .nav-button-left {
+        margin-right: auto;
+        padding-left: 20px;
+      }
+      .nav-button-left2 {
+        margin-right: 10px;
+        padding-left: 20px;
+      }
+      .nav-button-left3 {
+        margin-right: 10px;
+        padding-left: 10%;
+      }
+      .nav-button-right {
+        margin-left: auto;
+        padding-right: 20px;
+      }
+      .nav-button-left a, .nav-button-left2 a, .nav-button-left3 a, .nav-button-right a {
         color: #fff;
         text-decoration: none;
         background: #0779e4;
         padding: 10px 20px;
         border-radius: 5px;
       }
-      #main-header a:hover {
+      .nav-button-left a:hover, .nav-button-left2 a:hover, .nav-button-left3 a:hover, .nav-button-right a:hover {
         background: #005bb5;
       }
       .content {
@@ -104,7 +120,7 @@ html
       form button:hover {
         background: #005bb5;
       }
-      .buttonremove button{
+      .buttonremove button {
         background: #0779e4;
         color: #fff;
         padding: 10px;
@@ -112,18 +128,21 @@ html
         border-radius: 5px;
         cursor: pointer;
       }
-
-
   body
     header#main-header
-      div.container
-        h1 Detalhes da UC #{uc.sigla}
+      .nav-button-left
+        a(href='/users/profile') Perfil
+      if role === 'Admin'
+        .nav-button-left2 
+          a(href='/users') Users
+      h1 Detalhes da UC #{uc.sigla}
+      .nav-button-right
         a(href='/') Sair
     div.container
       div.content
         .section
           .buttonremove
-            button.remove-button(type="button", onclick="if(confirm('Tem certeza que deseja remover esta UC?')) { window.location.href = `/ucs/${sigla}/remover`; }") Remover UC
+            button.remove-button(type="button", onclick="if(confirm('Tem certeza que deseja remover esta UC?')) { window.location.href = `/ucs/${uc.sigla}/remover`; }") Remover UC
           h2 Título
           p #{uc.titulo}
         .section 

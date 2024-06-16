@@ -15,7 +15,6 @@ router.get('/', async (req, res) => {
 
 // Encontrar uma UC pela sigla
 router.get('/:sigla', async (req, res) => {
-  
   try {
     const uc = await ucController.findBySigla(req.params.sigla);
     const userId = req.user.id; // Assuming req.user contains the logged-in user info
@@ -24,11 +23,11 @@ router.get('/:sigla', async (req, res) => {
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
     if (uc) {
       if (req.user.role === 'Aluno') {
-        res.render('aluno/ucDetalhesAluno', { uc });
-      } else if ((isDocente && req.user.role === 'Docente') || req.user.role === 'Admin')  {
-        res.render('professor/ucDetalhesProf', { uc });
-      } else if (req.user.role === 'Docente')  {
-        res.render('aluno/ucDetalhesAluno', { uc });
+        res.render('aluno/ucDetalhesAluno', { uc, role: req.user.role });
+      } else if ((isDocente && req.user.role === 'Docente') || req.user.role === 'Admin') {
+        res.render('professor/ucDetalhesProf', { uc, role: req.user.role });
+      } else if (req.user.role === 'Docente') {
+        res.render('aluno/ucDetalhesAluno', { uc, role: req.user.role });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
       }
@@ -99,11 +98,11 @@ router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
     if (uc) {
       if (req.user.role === 'Aluno') {
-        res.render('aluno/ucAvaliacoesDatas', { uc });
+        res.render('aluno/ucAvaliacoesDatas', { uc, role: req.user.role });
       } else if ((isDocente && req.user.role === 'Docente') || req.user.role === 'Admin') {
-        res.render('professor/ucAvaliacoesDatasProf', { uc });
+        res.render('professor/ucAvaliacoesDatasProf', { uc, role: req.user.role });
       } else if (req.user.role === 'Docente') {
-        res.render('aluno/ucAvaliacoesDatas', { uc });
+        res.render('aluno/ucAvaliacoesDatas', { uc, role: req.user.role });
       } else {
         res.status(403).send('Access denied. You do not have the required role.');
       }
@@ -134,13 +133,13 @@ router.get('/:sigla/docentes', async (req, res) => {
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
     if (req.user.role === 'Aluno') {
       const docentes = await ucController.getDocentesBySigla(req.params.sigla);
-      res.render('aluno/ucDocentes', { sigla: req.params.sigla, docentes });
+      res.render('aluno/ucDocentes', { sigla: req.params.sigla, docentes , role: req.user.role});
     } else if ((isDocente && req.user.role === 'Docente') || req.user.role === 'Admin') {
       const docentes = await ucController.getDocentesBySigla(req.params.sigla);
-      res.render('professor/ucDocentesProf', { sigla: req.params.sigla, docentes });
+      res.render('professor/ucDocentesProf', { sigla: req.params.sigla, docentes, role: req.user.role });
     } else if(req.user.role === 'Docente') {
         const docentes = await ucController.getDocentesBySigla(req.params.sigla);
-        res.render('aluno/ucDocentes', { sigla: req.params.sigla, docentes });
+        res.render('aluno/ucDocentes', { sigla: req.params.sigla, docentes, role: req.user.role });
     } else {
       res.status(403).send('Access denied. You do not have the required role.');
     }
@@ -171,13 +170,13 @@ router.get('/:sigla/aulas/praticas', async (req, res) => {
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
     if (req.user.role === 'Aluno') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
-      res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas });
+      res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas, role: req.user.role });
     } else if ((isDocente && req.user.role === 'Docente') || req.user.role === 'Admin') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
-      res.render('professor/ucPraticasProf', { sigla: req.params.sigla, praticas });
+      res.render('professor/ucPraticasProf', { sigla: req.params.sigla, praticas, role: req.user.role });
     }else if (req.user.role === 'Docente') {
       const praticas = await ucController.getPraticasBySigla(req.params.sigla);
-      res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas });
+      res.render('aluno/ucPraticas', { sigla: req.params.sigla, praticas, role: req.user.role });
     } else {
       res.status(403).send('Access denied. You do not have the required role.');
     }
@@ -195,13 +194,13 @@ router.get('/:sigla/aulas/teoricas', async (req, res) => {
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
     if (req.user.role === 'Aluno') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
-      res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas });
+      res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas, role: req.user.role });
     } else if ((isDocente && req.user.role === 'Docente') || req.user.role === 'Admin') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
-      res.render('professor/ucTeoricasProf', { sigla: req.params.sigla, teoricas });
+      res.render('professor/ucTeoricasProf', { sigla: req.params.sigla, teoricas, role: req.user.role });
     }else if (req.user.role === 'Docente') {
       const teoricas = await ucController.getTeoricasBySigla(req.params.sigla);
-      res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas });
+      res.render('aluno/ucTeoricas', { sigla: req.params.sigla, teoricas, role: req.user.role });
     } else {
       res.status(403).send('Access denied. You do not have the required role.');
     }

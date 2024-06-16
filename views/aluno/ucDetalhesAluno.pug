@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Detalhes da UC
+    title Detalhes da UC #{uc.sigla}
     style.
       body {
         font-family: Arial, sans-serif;
@@ -20,21 +20,40 @@ html
         padding-top: 30px;
         min-height: 70px;
         border-bottom: #0779e4 3px solid;
+        display: flex;
+        align-items: center;
       }
       #main-header h1 {
+        flex-grow: 1;
         text-align: center;
         text-transform: uppercase;
         margin: 0;
         font-size: 24px;
       }
-      #main-header a {
+      .nav-button-left {
+        margin-right: auto;
+        padding-left: 20px;
+      }
+      .nav-button-left2 {
+        margin-right: 10px;
+        padding-left: 20px;
+      }
+      .nav-button-left3 {
+        margin-right: 10px;
+        padding-left: 10%;
+      }
+      .nav-button-right {
+        margin-left: auto;
+        padding-right: 20px;
+      }
+      .nav-button-left a, .nav-button-left2 a, .nav-button-left3 a, .nav-button-right a {
         color: #fff;
         text-decoration: none;
         background: #0779e4;
         padding: 10px 20px;
         border-radius: 5px;
       }
-      #main-header a:hover {
+      .nav-button-left a:hover, .nav-button-left2 a:hover, .nav-button-left3 a:hover, .nav-button-right a:hover {
         background: #005bb5;
       }
       .content {
@@ -64,8 +83,13 @@ html
       }
   body
     header#main-header
-      div.container
-        h1 Detalhes da UC #{uc.sigla}
+      .nav-button-left
+        a(href='/users/profile') Perfil
+      if role === 'Admin'
+        .nav-button-left2 
+          a(href='/users') Users
+      h1 Detalhes da UC #{uc.sigla}
+      .nav-button-right
         a(href='/') Sair
     div.container
       div.content
@@ -91,6 +115,7 @@ html
         .section 
           h2 Aulas Práticas
           a(href=`/ucs/${uc.sigla}/aulas/praticas`) Aulas Práticas
+        .section
           h2 Aulas Teóricas
           a(href=`/ucs/${uc.sigla}/aulas/teoricas`) Aulas Teóricas
         a(href='/ucs') Voltar à lista de siglas
