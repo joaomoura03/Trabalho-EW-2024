@@ -69,9 +69,13 @@ router.get('/:id', checkRole('Admin'),async (req, res) => {
   }
 });
 
-router.post('/:id', async (req, res) => {
+router.post('/:id',  checkRole('Admin'), upload.single('foto'),async (req, res) => {
   try {
-    await userController.update(req.params.id, req.body);
+    const updatedData = req.body;
+    if (req.file) {
+      updatedData.foto = req.file.filename;
+    }
+    await userController.update(req.params.id, updatedData);
     res.redirect('/users/');
   } catch (error) {
     res.status(500).send(error.message);

@@ -35,7 +35,7 @@ html
         padding-left: 20px;
       }
       .nav-button-left2 {
-        margin-right: 10px;
+        margin-right: 10px; /* Ajusta a margem para criar espaço entre os botões */
         padding-left: 20px;
       }
       .nav-button-right {
@@ -113,7 +113,9 @@ html
         a(href='/') Sair
     div.container
       .profile-card
-        form(action=`/users/${user._id}` method="POST" class="user-form")
+        if user.foto
+          img(src=`/fileStore/${user.foto}` alt="Foto do Usuário" width="150" height="150")
+        form(action=`/users/${user._id}` method="POST" class="user-form" enctype="multipart/form-data")
           h2 #{user.nome}
           p
             strong Nome:
@@ -139,13 +141,16 @@ html
           p
             strong Papel:
             span.static-field #{user.role}
-            input.edit-field(type="role" name="role" value=`${user.role}`)
+            input.edit-field(type="text" name="role" value=`${user.role}`)
           p
             strong Data de Registro:
             | #{user.registrationDate}
           p
             strong Último Acesso:
             | #{user.lastAccessDate}
+          p.edit-field
+            strong Foto:
+            input(type="file" name="foto" accept="image/*")
           p.button-row
             button.edit-button(type="button", onclick="document.querySelector('.user-form').classList.add('edit-mode')") Editar
             button.save-button(type="submit") Salvar
