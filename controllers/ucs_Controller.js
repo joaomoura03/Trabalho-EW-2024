@@ -176,3 +176,16 @@ module.exports.removeDocente = async (sigla, email) => {
     throw error;
   }
 };
+
+
+module.exports.removeTeoricas = async (sigla, teorica) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $pull: { 'horario.teoricas': { teorica } } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};

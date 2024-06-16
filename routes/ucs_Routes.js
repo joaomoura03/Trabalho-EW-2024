@@ -64,7 +64,7 @@ router.put('/:sigla', async (req, res) => {
 });
 
 // Remover uma UC pela sigla
-router.post('/:sigla', async (req, res) => {
+router.post('/:sigla/remover', async (req, res) => {
   try {
     const result = await ucController.removeBySigla(req.params.sigla);
     if (result.deletedCount > 0) {
@@ -348,6 +348,20 @@ router.post('/:sigla/docentes/remover', async (req, res) => {
   try {
     await ucController.removeDocente(sigla, email);
     res.redirect(`/ucs/${sigla}/docentes`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+// Route to remove a docente from a UC
+router.post('/:sigla/remove', async (req, res) => {
+  const { teorica } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removeTeoricas(sigla, teorica);
+    res.redirect(`/ucs/${sigla}`);
   } catch (error) {
     res.status(500).send(error.message);
   }
