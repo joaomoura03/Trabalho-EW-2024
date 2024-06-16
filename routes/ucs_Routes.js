@@ -64,11 +64,11 @@ router.put('/:sigla', async (req, res) => {
 });
 
 // Remover uma UC pela sigla
-router.delete('/:sigla', async (req, res) => {
+router.post('/:sigla', async (req, res) => {
   try {
     const result = await ucController.removeBySigla(req.params.sigla);
     if (result.deletedCount > 0) {
-      res.send('UC removida com sucesso');
+      res.redirect('/ucs');
     } else {
       res.status(404).send('UC não encontrada');
     }
@@ -76,6 +76,7 @@ router.delete('/:sigla', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 // Nova rota para listar os horários de uma UC específica
 router.get('/:sigla/horarios', async (req, res) => {
@@ -339,5 +340,17 @@ router.post('/:sigla/docentes', async (req, res) => {
   }
 });
 
+// Route to remove a docente from a UC
+router.post('/:sigla/docentes/remover', async (req, res) => {
+  const { email } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removeDocente(sigla, email);
+    res.redirect(`/ucs/${sigla}/docentes`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 module.exports = router;

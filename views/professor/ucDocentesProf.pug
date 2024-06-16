@@ -1,3 +1,166 @@
+//- doctype html
+//- html
+//-   head
+//-     title Docentes da UC #{sigla}
+//-     style.
+//-       body {
+//-         font-family: Arial, sans-serif;
+//-         background-color: #f4f4f4;
+//-         margin: 0;
+//-         padding: 0;
+//-       }
+//-       .container {
+//-         width: 80%;
+//-         margin: auto;
+//-         overflow: hidden;
+//-       }
+//-       #main-header {
+//-         background: #333;
+//-         color: #fff;
+//-         padding-top: 30px;
+//-         min-height: 70px;
+//-         border-bottom: #0779e4 3px solid;
+//-         display: flex;
+//-         align-items: center;
+//-       }
+//-       #main-header h1 {
+//-         flex-grow: 1;
+//-         text-align: center;
+//-         text-transform: uppercase;
+//-         margin: 0;
+//-         font-size: 24px;
+//-       }
+//-       .nav-button-left {
+//-         margin-right: auto;
+//-         padding-left: 20px;
+//-       }
+//-       .nav-button-left2 {
+//-         margin-right: 10px;
+//-         padding-left: 20px;
+//-       }
+//-       .nav-button-right {
+//-         margin-left: auto;
+//-         padding-right: 20px;
+//-       }
+//-       .nav-button-left a, .nav-button-left2 a, .nav-button-right a {
+//-         color: #fff;
+//-         text-decoration: none;
+//-         background: #0779e4;
+//-         padding: 10px 20px;
+//-         border-radius: 5px;
+//-       }
+//-       .nav-button-left a:hover, .nav-button-left2 a:hover, .nav-button-right a:hover {
+//-         background: #005bb5;
+//-       }
+//-       .content {
+//-         background: #fff;
+//-         padding: 20px;
+//-         margin-top: 20px;
+//-         border-radius: 5px;
+//-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//-       }
+//-       .section {
+//-         margin-bottom: 20px;
+//-       }
+//-       .section h2 {
+//-         color: #333;
+//-         border-bottom: 2px solid #0779e4;
+//-         padding-bottom: 5px;
+//-       }
+//-       .section ul {
+//-         list-style: none;
+//-         padding: 0;
+//-       }
+//-       .section li {
+//-         background: #f4f4f4;
+//-         margin: 10px 0;
+//-         padding: 10px;
+//-         border-left: #0779e4 5px solid;
+//-         position: relative;
+//-       }
+//-       .section li .remove-button {
+//-         position: absolute;
+//-         top: 10px;
+//-         right: 10px;
+//-         background: transparent;
+//-         border: none;
+//-         cursor: pointer;
+//-       }
+//-       .section li .remove-button img {
+//-         width: 20px;
+//-         height: 20px;
+//-       }
+//-       .section button {
+//-         background: #0779e4;
+//-         color: #fff;
+//-         padding: 5px 10px;
+//-         border: none;
+//-         border-radius: 5px;
+//-         cursor: pointer;
+//-       }
+//-       .section button:hover {
+//-         background: #005bb5;
+//-       }
+//-       form {
+//-         display: flex;
+//-         flex-direction: column;
+//-         margin-top: 10px;
+//-       }
+//-       form input,
+//-       form textarea {
+//-         margin: 5px 0;
+//-         padding: 10px;
+//-         border: 1px solid #ccc;
+//-         border-radius: 5px;
+//-       }
+//-       form button {
+//-         background: #0779e4;
+//-         color: #fff;
+//-         padding: 10px;
+//-         border: none;
+//-         border-radius: 5px;
+//-         cursor: pointer;
+//-       }
+//-       form button:hover {
+//-         background: #005bb5;
+//-       }
+//-   body
+//-     header#main-header
+//-       .nav-button-left
+//-         a(href='/users/profile') Perfil
+//-       if role === 'Admin'
+//-         .nav-button-left2 
+//-           a(href='/users') Users
+//-       h1 Docentes da UC #{sigla}
+//-       .nav-button-right
+//-         a(href='/') Sair
+//-     div.container
+//-       .content
+//-         .section
+//-           h2 Docentes
+//-           ul
+//-             each docente in docentes
+//-               li
+//-                 form(action=`/ucs/${sigla}/docentes`, method="POST", style="display:inline")
+//-                   input(type="hidden" name="email" value=`${docente.email}`)
+//-                   button.remove-button(type="submit")
+//-                     img(src="/images/trash-icon.png", alt="Remove")
+//-                 p Nome: #{docente.nome}
+//-                 p Categoria: #{docente.categoria}
+//-                 p Filiacão: #{docente.filiacao}
+//-                 p Email: #{docente.email}
+//-                 if docente.webpage
+//-                   p Webpage: 
+//-                     a(href=docente.webpage) #{docente.webpage}
+//-         .section
+//-           button(type="button", onclick="document.getElementById('docenteForm').style.display='block'") Adicionar Docente
+//-           form#docenteForm(action=`/ucs/${sigla}/docentes`, method="POST", style="display:none")
+//-             input(type="email" name="email" placeholder="Email do docente")
+//-             button(type="submit") Salvar Docente
+//-             a(href="#", onclick="document.getElementById('docenteForm').style.display='none'") Cancelar
+//-         a(href=`/ucs/${sigla}`) Voltar
+
+
 doctype html
 html
   head
@@ -76,6 +239,19 @@ html
         margin: 10px 0;
         padding: 10px;
         border-left: #0779e4 5px solid;
+        position: relative;
+      }
+      .section li .remove-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      .section li .remove-button img {
+        width: 20px;
+        height: 20px;
       }
       .section button {
         background: #0779e4;
@@ -128,6 +304,10 @@ html
           ul
             each docente in docentes
               li
+                form(action=`/ucs/${sigla}/docentes/remover`, method="POST", style="display:inline")
+                  input(type="hidden" name="email" value=`${docente.email}`)
+                  button.remove-button(type="submit")
+                    img(src="/images/trash-icon.png", alt="Remove")
                 p Nome: #{docente.nome}
                 p Categoria: #{docente.categoria}
                 p Filiacão: #{docente.filiacao}

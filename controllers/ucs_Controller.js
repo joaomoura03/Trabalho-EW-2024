@@ -164,3 +164,15 @@ module.exports.addDocente = async (sigla, newDocente) => {
     throw error;
   }
 };
+
+module.exports.removeDocente = async (sigla, email) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $pull: { docentes: { email: email } } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};

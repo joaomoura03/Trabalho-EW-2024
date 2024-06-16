@@ -128,6 +128,9 @@ html
         border-radius: 5px;
         cursor: pointer;
       }
+      .buttonremove button:hover {
+        background: #005bb5;
+      }
   body
     header#main-header
       .nav-button-left
@@ -142,7 +145,8 @@ html
       div.content
         .section
           .buttonremove
-            button.remove-button(type="button", onclick="if(confirm('Tem certeza que deseja remover esta UC?')) { window.location.href = `/ucs/${uc.sigla}/remover`; }") Remover UC
+            form(action=`/ucs/${uc.sigla}`, method="POST")
+              button(type="submit", onclick="return confirm('Tem certeza que deseja remover esta UC?')") Remover UC
           h2 Título
           p #{uc.titulo}
         .section 
