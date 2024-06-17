@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'your_secret_key'; // Substitua pela sua chave secreta
+const secret = 'your_secret_key';
 
 const authMiddleware = (req, res, next) => {
-  const token = req.cookies.token; // Extrai o token dos cookies da requisição
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).send('Access denied. No token provided.');

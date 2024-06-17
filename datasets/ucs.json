@@ -11,6 +11,22 @@
         "filiacao": "Dep. Informática - Universidade do Minho",
         "email": "jcr@di.uminho.pt",
         "webpage": "http://www.di.uminho.pt/~jcr"
+      },
+      {
+        "nome": "Docente1",
+        "foto": "",
+        "categoria": "Aluno",
+        "filiacao": "Dep. Informática - Universidade do Minho",
+        "email": "docente1@gmail.com",
+        "webpage": ""
+      },
+      {
+        "nome": "Docente 4",
+        "foto": "",
+        "categoria": "Aluno",
+        "filiacao": "Dep. Informática - Universidade do Minho",
+        "email": "docente4@gmail.com",
+        "webpage": ""
       }
     ],
     "horario": {
@@ -27,9 +43,9 @@
       "1 Teste escrito (45%)[nota mínima de 10 val.]"
     ],
     "datas": {
-      "teste": "???",
-      "exame": "???",
-      "projeto": "???"
+      "teste": "Dia 29 de Janeiro",
+      "exame": "Dia 17 de Fevereiro às 15:30; Sala 1.10 DI",
+      "projeto": "Dia 30 de Janeiro"
     },
     "aulas": [
       {
@@ -183,11 +199,20 @@
         "webpage": "http://www.di.uminho.pt/~jcr"
       },
       {
-        "nome": "Tiago Manuel Queirós Barata",
-        "foto": "tiago.jpg",
-        "categoria": "Professor Convidado",
+        "nome": "Docente2",
+        "foto": "",
+        "categoria": "Aluno",
         "filiacao": "Dep. Informática - Universidade do Minho",
-        "email": "d13753@di.uminho.pt"
+        "email": "docente2@gmail.com",
+        "webpage": ""
+      },
+      {
+        "nome": "Docente1",
+        "foto": "",
+        "categoria": "Aluno",
+        "filiacao": "Dep. Informática - Universidade do Minho",
+        "email": "docente1@gmail.com",
+        "webpage": ""
       }
     ],
     "horario": {
@@ -206,9 +231,9 @@
       "1 Teste escrito (45%)[nota mínima de 10 val.]"
     ],
     "datas": {
-      "teste": "???",
-      "exame": "???",
-      "projeto": "???"
+      "teste": "Dia 15 de Maio às 14:30; Sala CP2 2.10",
+      "exame": "Dia 17 de Junho às 15:30; Sala 1.10 DI",
+      "projeto": "Entrega dia 17 de Junho"
     },
     "aulas": [
       {
@@ -360,11 +385,27 @@
         "webpage": "http://www.di.uminho.pt/~jcr"
       },
       {
-        "nome": "Luís Filipe Cunha",
-        "foto": "lfc-di.jpeg",
-        "categoria": "Professor Convidado",
+        "nome": "Docente1",
+        "foto": "",
+        "categoria": "Aluno",
         "filiacao": "Dep. Informática - Universidade do Minho",
-        "email": "lfc@di.uminho.pt",
+        "email": "docente1@gmail.com",
+        "webpage": ""
+      },
+      {
+        "nome": "Docente 3",
+        "foto": "",
+        "categoria": "Aluno",
+        "filiacao": "Dep. Informática - Universidade do Minho",
+        "email": "docente3@gmail.com",
+        "webpage": ""
+      },
+      {
+        "nome": "Docente2",
+        "foto": "",
+        "categoria": "Aluno",
+        "filiacao": "Dep. Informática - Universidade do Minho",
+        "email": "docente2@gmail.com",
         "webpage": ""
       }
     ],
@@ -630,6 +671,14 @@
           "Construção e visualização de classes.",
           "Implementação de alguns exemplos: stock e lista de compras."
         ]
+      },
+      {
+        "tipo": "P",
+        "data": "Data: 2023-12-15",
+        "sumario": [
+          "Exercicio da aula realizada"
+        ],
+        "pdf": "1718654804584.pdf"
       }
     ]
   }

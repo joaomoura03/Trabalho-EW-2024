@@ -41,9 +41,9 @@ router.post('/register', async (req, res) => {
         password: password,
         registrationDate: new Date(),
         lastAccessDate: new Date(),
-        role: 'Aluno',  // Papel padrão, altere conforme necessário
-        categoria: 'Aluno',  // Categoria padrão, altere conforme necessário
-        filiacao: 'Dep. Informática - Universidade do Minho',  // Filiação padrão, altere conforme necessário
+        role: 'Aluno',
+        categoria: 'Aluno',
+        filiacao: 'Universidade do Minho',
         webpage: '',
         foto: ''
       };
