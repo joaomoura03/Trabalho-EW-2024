@@ -154,9 +154,13 @@ html
                   input(type="hidden" name="data" value=`${pratica.data}`)
                   button.remove-button(type="submit")
                     img(src="/images/trash-icon.png", alt="Remove")
-          form#aulaForm(action=`/ucs/${sigla}/aulas/praticas`, method="POST", style="display:none")
+                if pratica.pdf
+                  p 
+                    a(href=`/fileStore/${pratica.pdf}` download=`${pratica.pdf}`) Download PDF
+          form#aulaForm(action=`/ucs/${sigla}/aulas/praticas`, method="POST", enctype="multipart/form-data", style="display:none")
             input(type="text" name="data" placeholder="Data da Aula")
             textarea(name="sumario" placeholder="Sumário da Aula")
+            input(type="file" name="pdf" accept="application/pdf")
             button(type="submit") Salvar Aula
             a(href="#", onclick="document.getElementById('aulaForm').style.display='none'") Cancelar
         a(href=`/ucs/${sigla}`) Voltar

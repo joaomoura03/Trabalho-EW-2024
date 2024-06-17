@@ -108,19 +108,18 @@ router.put('/:id', async (req, res) => {
 });
 
 // Remover um usuário pelo ID
-router.delete('/:id', async (req, res) => {
+router.post('/delete/:id', checkRole('Admin'), async (req, res) => {
   try {
     const result = await userController.removeById(req.params.id);
     if (result.deletedCount > 0) {
-      res.send('Usuário removido com sucesso');
+      res.redirect('/users/');
     } else {
-      res.status(404).send('Usuário não encontrado');
+      res.redirect('/users/:id');
     }
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
-
 
 
 module.exports = router;

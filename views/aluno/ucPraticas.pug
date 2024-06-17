@@ -102,4 +102,7 @@ html
                 ul
                   each item in pratica.sumario
                     li #{item}
+                if pratica.pdf
+                  p 
+                    a(href=`/fileStore/${pratica.pdf}` download=`${pratica.pdf}`) Download PDF
         a(href=`/ucs/${sigla}`) Voltar

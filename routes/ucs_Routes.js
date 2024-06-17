@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const ucController = require('../controllers/ucs_Controller');
 const userController = require('../controllers/users_Controller');
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'public', 'fileStore'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
 
 // Listar todas as UCs
 router.get('/', async (req, res) => {
@@ -38,16 +52,6 @@ router.get('/:sigla', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
-// // Inserir uma nova UC
-// router.post('/', async (req, res) => {
-//   try {
-//     // const uc = await ucController.insert(req.body);
-//     // res.status(201).json(uc);
-//   } catch (error) {
-//     res.status(500).send(error.message);
-//   }
-// });
 
 // Atualizar uma UC pela sigla
 router.put('/:sigla', async (req, res) => {
@@ -254,9 +258,12 @@ router.post('/:sigla/avaliacoes-e-datas', async (req, res) => {
 
 
 // Adicionar nova aula prática
-router.post('/:sigla/aulas/praticas', async (req, res) => {
+router.post('/:sigla/aulas/praticas', upload.single('pdf'), async (req, res) => {
   const { data, sumario } = req.body;
   const aula = { tipo: 'P', data, sumario: sumario.split('\n') };
+  if (req.file) {
+    aula.pdf = req.file.filename;
+  }
   try {
     const result = await ucController.addAulasPratica(req.params.sigla, aula);
     res.redirect(`/ucs/${req.params.sigla}/aulas/praticas`);
@@ -264,12 +271,14 @@ router.post('/:sigla/aulas/praticas', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
-
-// Adicionar nova aula teórica
-router.post('/:sigla/aulas/teoricas', async (req, res) => {
+router.post('/:sigla/aulas/teoricas', upload.single('pdf'), async (req, res) => {
   const { data, sumario } = req.body;
   const aula = { tipo: 'T', data, sumario: sumario.split('\n') };
+
+  if (req.file) {
+    aula.pdf = req.file.filename;
+  }
+
   try {
     const result = await ucController.addAulasTeorica(req.params.sigla, aula);
     res.redirect(`/ucs/${req.params.sigla}/aulas/teoricas`);

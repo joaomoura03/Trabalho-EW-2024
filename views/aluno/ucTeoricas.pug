@@ -102,4 +102,7 @@ html
                 ul
                   each item in teorica.sumario
                     li #{item}
+                if teorica.pdf
+                  p 
+                    a(href=`/fileStore/${teorica.pdf}` download=`${teorica.pdf}`) Download PDF
         a(href=`/ucs/${sigla}`) Voltar

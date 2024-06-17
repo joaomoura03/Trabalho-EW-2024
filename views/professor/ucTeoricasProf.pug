@@ -154,9 +154,13 @@ html
                   input(type="hidden" name="data" value=`${teorica.data}`)
                   button.remove-button(type="submit")
                     img(src="/images/trash-icon.png", alt="Remove")
-          form#teoricaForm(action=`/ucs/${sigla}/aulas/teoricas`, method="POST", style="display:none")
+                if teorica.pdf
+                  p 
+                    a(href=`/fileStore/${teorica.pdf}` download=`${teorica.pdf}`) Download PDF
+          form#teoricaForm(action=`/ucs/${sigla}/aulas/teoricas`, method="POST", enctype="multipart/form-data", style="display:none")
             input(type="text" name="data" placeholder="Data da Aula Teórica")
             textarea(name="sumario" placeholder="Sumário da Aula Teórica")
+            input(type="file" name="pdf" accept="application/pdf")
             button(type="submit") Salvar Teórica
             a(href="#", onclick="document.getElementById('teoricaForm').style.display='none'") Cancelar
         a(href=`/ucs/${sigla}`) Voltar
