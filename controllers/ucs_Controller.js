@@ -177,12 +177,87 @@ module.exports.removeDocente = async (sigla, email) => {
   }
 };
 
-
 module.exports.removeTeoricas = async (sigla, teorica) => {
   try {
     const result = await UC.updateOne(
       { sigla: sigla },
-      { $pull: { 'horario.teoricas': { teorica } } }
+      { $pull: { 'horario.teoricas': teorica } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.removePraticas = async (sigla, pratica) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $pull: { 'horario.praticas': pratica } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.removeAulaPratica = async (sigla, data) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $pull: { aulas: { tipo: 'P', data: data } } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+module.exports.removeAulaTeorica = async (sigla, data) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $pull: { aulas: { tipo: 'T', data: data } } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+module.exports.removeAvaliacao = async (sigla, avaliacao) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $pull: { avaliacao: avaliacao } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.removeData = async (sigla, tipo) => {
+  try {
+    const update = {};
+    update[`datas.${tipo}`] = "";
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $set: update }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.updateDatas = async (sigla, datas) => {
+  try {
+    const result = await UC.updateOne(
+      { sigla: sigla },
+      { $set: { datas: datas } }
     );
     return result;
   } catch (error) {

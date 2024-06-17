@@ -90,6 +90,19 @@ html
         margin: 10px 0;
         padding: 10px;
         border-left: #0779e4 5px solid;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .section li .remove-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+      .section li .remove-button img {
+        width: 20px;
+        height: 20px;
       }
       form {
         display: flex;
@@ -137,6 +150,10 @@ html
                 ul
                   each item in teorica.sumario
                     li #{item}
+                form(action=`/ucs/${sigla}/aulas/teoricas/remover`, method="POST", style="display:inline")
+                  input(type="hidden" name="data" value=`${teorica.data}`)
+                  button.remove-button(type="submit")
+                    img(src="/images/trash-icon.png", alt="Remove")
           form#teoricaForm(action=`/ucs/${sigla}/aulas/teoricas`, method="POST", style="display:none")
             input(type="text" name="data" placeholder="Data da Aula Teórica")
             textarea(name="sumario" placeholder="Sumário da Aula Teórica")

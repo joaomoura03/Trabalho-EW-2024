@@ -1,191 +1,3 @@
-//- doctype html
-//- html
-//-   head
-//-     title Detalhes da UC #{uc.sigla}
-//-     style.
-//-       body {
-//-         font-family: Arial, sans-serif;
-//-         background-color: #f4f4f4;
-//-         margin: 0;
-//-         padding: 0;
-//-       }
-//-       .container {
-//-         width: 80%;
-//-         margin: auto;
-//-         overflow: hidden;
-//-       }
-//-       #main-header {
-//-         background: #333;
-//-         color: #fff;
-//-         padding-top: 30px;
-//-         min-height: 70px;
-//-         border-bottom: #0779e4 3px solid;
-//-         display: flex;
-//-         align-items: center;
-//-       }
-//-       #main-header h1 {
-//-         flex-grow: 1;
-//-         text-align: center;
-//-         text-transform: uppercase;
-//-         margin: 0;
-//-         font-size: 24px;
-//-       }
-//-       .nav-button-left {
-//-         margin-right: auto;
-//-         padding-left: 20px;
-//-       }
-//-       .nav-button-left2 {
-//-         margin-right: 10px;
-//-         padding-left: 20px;
-//-       }
-//-       .nav-button-left3 {
-//-         margin-right: 10px;
-//-         padding-left: 10%;
-//-       }
-//-       .nav-button-right {
-//-         margin-left: auto;
-//-         padding-right: 20px;
-//-       }
-//-       .nav-button-left a, .nav-button-left2 a, .nav-button-left3 a, .nav-button-right a {
-//-         color: #fff;
-//-         text-decoration: none;
-//-         background: #0779e4;
-//-         padding: 10px 20px;
-//-         border-radius: 5px;
-//-       }
-//-       .nav-button-left a:hover, .nav-button-left2 a:hover, .nav-button-left3 a:hover, .nav-button-right a:hover {
-//-         background: #005bb5;
-//-       }
-//-       .content {
-//-         background: #fff;
-//-         padding: 20px;
-//-         margin-top: 20px;
-//-         border-radius: 5px;
-//-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-//-       }
-//-       .section {
-//-         margin-bottom: 20px;
-//-       }
-//-       .section h2 {
-//-         color: #333;
-//-         border-bottom: 2px solid #0779e4;
-//-         padding-bottom: 5px;
-//-       }
-//-       .section ul {
-//-         list-style: none;
-//-         padding: 0;
-//-       }
-//-       .section li {
-//-         background: #f4f4f4;
-//-         margin: 10px 0;
-//-         padding: 10px;
-//-         border-left: #0779e4 5px solid;
-//-       }
-//-       .horario-header {
-//-         display: flex;
-//-         justify-content: space-between;
-//-         align-items: center;
-//-       }
-//-       .horario-header button {
-//-         background: #0779e4;
-//-         color: #fff;
-//-         padding: 5px 10px;
-//-         text-decoration: none;
-//-         border-radius: 5px;
-//-         border: none;
-//-         cursor: pointer;
-//-       }
-//-       .horario-header button:hover {
-//-         background: #005bb5;
-//-       }
-//-       form {
-//-         display: flex;
-//-         flex-direction: column;
-//-         margin-top: 10px;
-//-       }
-//-       form input {
-//-         margin: 5px 0;
-//-         padding: 10px;
-//-         border: 1px solid #ccc;
-//-         border-radius: 5px;
-//-       }
-//-       form button {
-//-         background: #0779e4;
-//-         color: #fff;
-//-         padding: 10px;
-//-         border: none;
-//-         border-radius: 5px;
-//-         cursor: pointer;
-//-       }
-//-       form button:hover {
-//-         background: #005bb5;
-//-       }
-//-       .buttonremove button {
-//-         background: #0779e4;
-//-         color: #fff;
-//-         padding: 10px;
-//-         border: none;
-//-         border-radius: 5px;
-//-         cursor: pointer;
-//-       }
-//-       .buttonremove button:hover {
-//-         background: #005bb5;
-//-       }
-//-   body
-//-     header#main-header
-//-       .nav-button-left
-//-         a(href='/users/profile') Perfil
-//-       if role === 'Admin'
-//-         .nav-button-left2 
-//-           a(href='/users') Users
-//-       h1 Detalhes da UC #{uc.sigla}
-//-       .nav-button-right
-//-         a(href='/') Sair
-//-     div.container
-//-       div.content
-//-         .section
-//-           .buttonremove
-//-             form(action=`/ucs/${uc.sigla}/remover`, method="POST")
-//-               button(type="submit", onclick="return confirm('Tem certeza que deseja remover esta UC?')") Remover UC
-//-           h2 Título
-//-           p #{uc.titulo}
-//-         .section 
-//-           h2 Docentes
-//-           a(href=`/ucs/${uc.sigla}/docentes`) Docentes
-//-         .section
-//-           h2 Horários
-//-           .horario-header
-//-             h3 Teóricas
-//-             button(type="button", onclick="document.getElementById('teoricasForm').style.display='block'") Adicionar Teórica
-//-           ul
-//-             each teorica in uc.horario.teoricas
-//-               li #{teorica}
-//-           form#teoricasForm(action=`/ucs/${uc.sigla}`, method="POST", style="display:none")
-//-             input(type="hidden" name="type" value="teoricas")
-//-             input(type="text" name="class" placeholder="Nova aula teórica")
-//-             button(type="submit") Salvar Teóricas
-//-           .horario-header
-//-             h3 Práticas
-//-             button(type="button", onclick="document.getElementById('praticasForm').style.display='block'") Adicionar Prática
-//-           ul
-//-             each pratica in uc.horario.praticas
-//-               li #{pratica}
-//-           form#praticasForm(action=`/ucs/${uc.sigla}`, method="POST", style="display:none")
-//-             input(type="hidden" name="type" value="praticas")
-//-             input(type="text" name="class" placeholder="Nova aula prática")
-//-             button(type="submit") Salvar Práticas
-//-         .section
-//-           h2 Avaliação e Datas 
-//-           a(href=`/ucs/${uc.sigla}/avaliacoes-e-datas`) Avaliação e Datas
-//-         .section 
-//-           h2 Aulas Práticas
-//-           a(href=`/ucs/${uc.sigla}/aulas/praticas`) Aulas Práticas
-//-         .section
-//-           h2 Aulas Teóricas
-//-           a(href=`/ucs/${uc.sigla}/aulas/teoricas`) Aulas Teóricas
-//-         a(href='/ucs') Voltar à lista de siglas
-
-
 doctype html
 html
   head
@@ -361,8 +173,9 @@ html
             each teorica in uc.horario.teoricas
               li
                 span #{teorica}
-                form(action=`/ucs/${uc.sigla}/remove`, method="POST", style="display:inline")
-                  button(type="submit", onclick="return confirm('Tem certeza que deseja remover esta aula teórica?')") 
+                form(action=`/ucs/${uc.sigla}/removeT`, method="POST", style="display:inline")
+                  input(type="hidden" name="teorica" value=`${teorica}`)
+                  button.remove-button(type="submit")
                     img(src="/images/trash-icon.png" alt="Remover")
           form#teoricasForm(action=`/ucs/${uc.sigla}`, method="POST", style="display:none")
             input(type="hidden" name="type" value="teoricas")
@@ -375,8 +188,9 @@ html
             each pratica in uc.horario.praticas
               li
                 span #{pratica}
-                form(action=`/ucs/${uc.sigla}`, method="POST", style="display:inline")
-                  button(type="submit", onclick="return confirm('Tem certeza que deseja remover esta aula prática?')") 
+                form(action=`/ucs/${uc.sigla}/removeP`, method="POST", style="display:inline")
+                  input(type="hidden" name="pratica" value=`${pratica}`)
+                  button.remove-button(type="submit")
                     img(src="/images/trash-icon.png" alt="Remover")
           form#praticasForm(action=`/ucs/${uc.sigla}`, method="POST", style="display:none")
             input(type="hidden" name="type" value="praticas")

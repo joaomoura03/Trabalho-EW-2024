@@ -1,3 +1,181 @@
+//- doctype html
+//- html
+//-   head
+//-     title Avaliações e Datas da UC #{uc.sigla}
+//-     style.
+//-       body {
+//-         font-family: Arial, sans-serif;
+//-         background-color: #f4f4f4;
+//-         margin: 0;
+//-         padding: 0;
+//-       }
+//-       .container {
+//-         width: 80%;
+//-         margin: auto;
+//-         overflow: hidden;
+//-       }
+//-       #main-header {
+//-         background: #333;
+//-         color: #fff;
+//-         padding-top: 30px;
+//-         min-height: 70px;
+//-         border-bottom: #0779e4 3px solid;
+//-         display: flex;
+//-         align-items: center;
+//-       }
+//-       #main-header h1 {
+//-         flex-grow: 1;
+//-         text-align: center;
+//-         text-transform: uppercase;
+//-         margin: 0;
+//-         font-size: 24px;
+//-       }
+//-       .nav-button-left {
+//-         margin-right: auto;
+//-         padding-left: 20px;
+//-       }
+//-       .nav-button-left2 {
+//-         margin-right: 10px;
+//-         padding-left: 20px;
+//-       }
+//-       .nav-button-right {
+//-         margin-left: auto;
+//-         padding-right: 20px;
+//-       }
+//-       .nav-button-left a, .nav-button-left2 a, .nav-button-right a {
+//-         color: #fff;
+//-         text-decoration: none;
+//-         background: #0779e4;
+//-         padding: 10px 20px;
+//-         border-radius: 5px;
+//-       }
+//-       .nav-button-left a:hover, .nav-button-left2 a:hover, .nav-button-right a:hover {
+//-         background: #005bb5;
+//-       }
+//-       .content {
+//-         background: #fff;
+//-         padding: 20px;
+//-         margin-top: 20px;
+//-         border-radius: 5px;
+//-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//-       }
+//-       .section {
+//-         margin-bottom: 20px;
+//-       }
+//-       .section h2 {
+//-         color: #333;
+//-         border-bottom: 2px solid #0779e4;
+//-         padding-bottom: 5px;
+//-         display: flex;
+//-         justify-content: space-between;
+//-         align-items: center;
+//-       }
+//-       .section ul {
+//-         list-style: none;
+//-         padding: 0;
+//-       }
+//-       .section li {
+//-         background: #f4f4f4;
+//-         margin: 10px 0;
+//-         padding: 10px;
+//-         border-left: #0779e4 5px solid;
+//-         display: flex;
+//-         justify-content: space-between;
+//-         align-items: center;
+//-       }
+//-       .section li .remove-button {
+//-         background: none;
+//-         border: none;
+//-         cursor: pointer;
+//-         padding: 0;
+//-       }
+//-       .section li .remove-button img {
+//-         width: 20px;
+//-         height: 20px;
+//-       }
+//-       form {
+//-         display: flex;
+//-         flex-direction: column;
+//-         margin-top: 10px;
+//-       }
+//-       form input,
+//-       form textarea {
+//-         margin: 5px 0;
+//-         padding: 10px;
+//-         border: 1px solid #ccc;
+//-         border-radius: 5px;
+//-       }
+//-       form button {
+//-         background: #0779e4;
+//-         color: #fff;
+//-         padding: 10px;
+//-         border: none;
+//-         border-radius: 5px;
+//-         cursor: pointer;
+//-       }
+//-       form button:hover {
+//-         background: #005bb5;
+//-       }
+//-   body
+//-     header#main-header
+//-       .nav-button-left
+//-         a(href='/users/profile') Perfil
+//-       if role === 'Admin'
+//-         .nav-button-left2 
+//-           a(href='/users') Users
+//-       h1 Avaliações e Datas da UC #{uc.sigla}
+//-       .nav-button-right
+//-         a(href='/') Sair
+//-     div.container
+//-       div.content
+//-         .section
+//-           h2
+//-             | Avaliações
+//-             button(type="button", onclick="document.getElementById('avaliacaoForm').style.display='block'") Adicionar Avaliação
+//-           ul
+//-             each avaliacao in uc.avaliacao
+//-               li
+//-                 span #{avaliacao}
+//-                 form(action=`/ucs/${uc.sigla}/avaliacoes/remover`, method="POST", style="display:inline")
+//-                   input(type="hidden" name="avaliacao" value=`${avaliacao}`)
+//-                   button.remove-button(type="submit")
+//-                     img(src="/images/trash-icon.png", alt="Remover")
+//-           form#avaliacaoForm(action=`/ucs/${uc.sigla}/avaliacoes-e-datas`, method="POST", style="display:none")
+//-             input(type="hidden" name="type" value="avaliacao")
+//-             input(type="text" name="class" placeholder="Nova Avaliação")
+//-             button(type="submit") Salvar Avaliação  
+//-         .section
+//-           h2
+//-             | Datas
+//-             button(type="button", onclick="document.getElementById('datasForm').style.display='block'") Editar Datas
+//-           ul
+//-             li
+//-               span Teste: #{uc.datas.teste}
+//-               form(action=`/ucs/${uc.sigla}/datas/remover`, method="POST", style="display:inline")
+//-                 input(type="hidden" name="tipo" value="teste")
+//-                 button.remove-button(type="submit")
+//-                   img(src="/images/trash-icon.png", alt="Remover")
+//-             li
+//-               span Exame: #{uc.datas.exame}
+//-               form(action=`/ucs/${uc.sigla}/datas/remover`, method="POST", style="display:inline")
+//-                 input(type="hidden" name="tipo" value="exame")
+//-                 button.remove-button(type="submit")
+//-                   img(src="/images/trash-icon.png", alt="Remover")
+//-             li
+//-               span Projeto: #{uc.datas.projeto}
+//-               form(action=`/ucs/${uc.sigla}/datas/remover`, method="POST", style="display:inline")
+//-                 input(type="hidden" name="tipo" value="projeto")
+//-                 button.remove-button(type="submit")
+//-                   img(src="/images/trash-icon.png", alt="Remover")
+//-           form#datasForm(action=`/ucs/${uc.sigla}/avaliacoes-e-datas`, method="POST", style="display:none")
+//-             input(type="hidden" name="type" value="datas")
+//-             input(type="text" name="teste" placeholder="Teste")
+//-             input(type="text" name="exame" placeholder="Exame")
+//-             input(type="text" name="projeto" placeholder="Projeto")
+//-             button(type="submit") Salvar Datas
+//-         a(href=`/ucs/${uc.sigla}`) Voltar
+
+
 doctype html
 html
   head
@@ -35,7 +213,7 @@ html
         padding-left: 20px;
       }
       .nav-button-left2 {
-        margin-right: 10px; /* Ajusta a margem para criar espaço entre os botões */
+        margin-right: 10px;
         padding-left: 20px;
       }
       .nav-button-right {
@@ -79,17 +257,19 @@ html
         margin: 10px 0;
         padding: 10px;
         border-left: #0779e4 5px solid;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
-      .section button {
-        background: #0779e4;
-        color: #fff;
-        padding: 5px 10px;
+      .section li .remove-button {
+        background: none;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
+        padding: 0;
       }
-      .section button:hover {
-        background: #005bb5;
+      .section li .remove-button img {
+        width: 20px;
+        height: 20px;
       }
       form {
         display: flex;
@@ -132,7 +312,12 @@ html
             button(type="button", onclick="document.getElementById('avaliacaoForm').style.display='block'") Adicionar Avaliação
           ul
             each avaliacao in uc.avaliacao
-              li #{avaliacao}
+              li
+                span #{avaliacao}
+                form(action=`/ucs/${uc.sigla}/avaliacoes/remover`, method="POST", style="display:inline")
+                  input(type="hidden" name="avaliacao" value=`${avaliacao}`)
+                  button.remove-button(type="submit")
+                    img(src="/images/trash-icon.png", alt="Remover")
           form#avaliacaoForm(action=`/ucs/${uc.sigla}/avaliacoes-e-datas`, method="POST", style="display:none")
             input(type="hidden" name="type" value="avaliacao")
             input(type="text" name="class" placeholder="Nova Avaliação")
@@ -142,13 +327,28 @@ html
             | Datas
             button(type="button", onclick="document.getElementById('datasForm').style.display='block'") Editar Datas
           ul
-            li Teste: #{uc.datas.teste}
-            li Exame: #{uc.datas.exame} 
-            li Projeto: #{uc.datas.projeto}
-          form#datasForm(action=`/ucs/${uc.sigla}/avaliacoes-e-datas`, method="POST", style="display:none")
+            li
+              span Teste: #{uc.datas.teste}
+              form(action=`/ucs/${uc.sigla}/datas/remover`, method="POST", style="display:inline")
+                input(type="hidden" name="tipo" value="teste")
+                button.remove-button(type="submit")
+                  img(src="/images/trash-icon.png", alt="Remover")
+            li
+              span Exame: #{uc.datas.exame}
+              form(action=`/ucs/${uc.sigla}/datas/remover`, method="POST", style="display:inline")
+                input(type="hidden" name="tipo" value="exame")
+                button.remove-button(type="submit")
+                  img(src="/images/trash-icon.png", alt="Remover")
+            li
+              span Projeto: #{uc.datas.projeto}
+              form(action=`/ucs/${uc.sigla}/datas/remover`, method="POST", style="display:inline")
+                input(type="hidden" name="tipo" value="projeto")
+                button.remove-button(type="submit")
+                  img(src="/images/trash-icon.png", alt="Remover")
+          form#datasForm(action=`/ucs/${uc.sigla}/datas`, method="POST", style="display:none")
             input(type="hidden" name="type" value="datas")
-            input(type="text" name="teste" placeholder="Teste")
-            input(type="text" name="exame" placeholder="Exame")
-            input(type="text" name="projeto" placeholder="Projeto")
-            button(type="submit") Salvar Datas
+            input(type="text" name="teste" placeholder="Teste" value=`${uc.datas.teste}`)
+            input(type="text" name="exame" placeholder="Exame" value=`${uc.datas.exame}`)
+            input(type="text" name="projeto" placeholder="Projeto" value=`${uc.datas.projeto}`)
+            button(type="submit") Atualizar Datas
         a(href=`/ucs/${uc.sigla}`) Voltar

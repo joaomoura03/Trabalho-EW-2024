@@ -353,15 +353,93 @@ router.post('/:sigla/docentes/remover', async (req, res) => {
   }
 });
 
-
-// Route to remove a docente from a UC
-router.post('/:sigla/remove', async (req, res) => {
+// Route to remove a horário teórico
+router.post('/:sigla/removeT', async (req, res) => {
   const { teorica } = req.body;
   const sigla = req.params.sigla;
 
   try {
     await ucController.removeTeoricas(sigla, teorica);
     res.redirect(`/ucs/${sigla}`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Route to remove a horário prático
+router.post('/:sigla/removeP', async (req, res) => {
+  const { pratica } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removePraticas(sigla, pratica);
+    res.redirect(`/ucs/${sigla}`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Route to remove a aula prática
+router.post('/:sigla/aulas/praticas/remover', async (req, res) => {
+  const { data } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removeAulaPratica(sigla, data);
+    res.redirect(`/ucs/${sigla}/aulas/praticas`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Route to remove a aula teórica
+router.post('/:sigla/aulas/teoricas/remover', async (req, res) => {
+  const { data } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removeAulaTeorica(sigla, data);
+    res.redirect(`/ucs/${sigla}/aulas/teoricas`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Route to remove an avaliação
+router.post('/:sigla/avaliacoes/remover', async (req, res) => {
+  const { avaliacao } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removeAvaliacao(sigla, avaliacao);
+    res.redirect(`/ucs/${sigla}/avaliacoes-e-datas`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Route to remove a data
+router.post('/:sigla/datas/remover', async (req, res) => {
+  const { tipo } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.removeData(sigla, tipo);
+    res.redirect(`/ucs/${sigla}/avaliacoes-e-datas`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+// Route to update datas
+router.post('/:sigla/datas', async (req, res) => {
+  const { teste, exame, projeto } = req.body;
+  const sigla = req.params.sigla;
+
+  try {
+    await ucController.updateDatas(sigla, { teste, exame, projeto });
+    res.redirect(`/ucs/${sigla}/avaliacoes-e-datas`);
   } catch (error) {
     res.status(500).send(error.message);
   }
