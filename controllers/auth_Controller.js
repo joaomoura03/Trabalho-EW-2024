@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/users_Model');
 
-const SECRET_KEY = 'your_secret_key'; // Altere para a sua chave secreta
+const SECRET_KEY = 'your_secret_key';
 
 module.exports.authenticate = async (email, password) => {
   const user = await User.findOne({ email, password }).exec();

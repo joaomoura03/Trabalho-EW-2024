@@ -36,13 +36,11 @@ module.exports.findUserByIdPerfil = async (id) => {
 
 module.exports.updateProfile = async (id, userData, file) => {
   if (file) {
-    // Delete old photo if it exists
     const user = await User.findById(id);
     if (user && user.foto) {
       fs.unlinkSync(path.join(__dirname, '..', 'public', 'fileStore', user.foto));
     }
 
-    // Set new photo path
     userData.foto = file.filename;
   }
 

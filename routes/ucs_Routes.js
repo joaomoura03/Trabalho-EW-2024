@@ -16,7 +16,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
 // Listar todas as UCs
 router.get('/', async (req, res) => {
   try {
@@ -31,7 +30,7 @@ router.get('/', async (req, res) => {
 router.get('/:sigla', async (req, res) => {
   try {
     const uc = await ucController.findBySigla(req.params.sigla);
-    const userId = req.user.id; // Assuming req.user contains the logged-in user info
+    const userId = req.user.id;
     const ucSigla = req.params.sigla;
 
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
@@ -81,7 +80,6 @@ router.post('/:sigla/remover', async (req, res) => {
   }
 });
 
-
 // Nova rota para listar os horários de uma UC específica
 router.get('/:sigla/horarios', async (req, res) => {
   try {
@@ -92,12 +90,11 @@ router.get('/:sigla/horarios', async (req, res) => {
   }
 });
 
-
 // Rota para listar avaliações e datas de uma UC específica
 router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
   try {
     const uc = await ucController.findBySigla(req.params.sigla);
-    const userId = req.user.id; // Assuming req.user contains the logged-in user info
+    const userId = req.user.id;
     const ucSigla = req.params.sigla;
 
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
@@ -120,14 +117,11 @@ router.get('/:sigla/avaliacoes-e-datas', async (req, res) => {
   }
 });
 
-
-// Helper function to check if user is a docente in the UC
 const isUserDocenteInUC = async (userId, ucSigla) => {
   const user = await userController.findUserByIdPerfil(userId);
   const uc = await ucController.findBySigla(ucSigla);
   return uc.docentes.some(docente => docente.email === user.email);
 };
-
 
 // Rota para listar docentes de uma UC específica
 router.get('/:sigla/docentes', async (req, res) => {
@@ -193,7 +187,7 @@ router.get('/:sigla/aulas/praticas', async (req, res) => {
 // Rota para listar aulas teóricas de uma UC específica
 router.get('/:sigla/aulas/teoricas', async (req, res) => {
   try {
-    const userId = req.user.id; // Assuming req.user contains the logged-in user info
+    const userId = req.user.id;
     const ucSigla = req.params.sigla;
 
     const isDocente = await isUserDocenteInUC(userId, ucSigla);
@@ -229,16 +223,6 @@ router.post('/:sigla', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
-// if (req.user.role === 'Aluno') {
-//   res.render('ucs', { ucs });
-// } else if (req.user.role === 'Docente') {
-//   res.render('register', { ucs });
-// } else {
-//   res.status(403).send('Access denied. You do not have the required role.');
-// }
-
-
 
 // Adicionar nova avaliação
 router.post('/:sigla/avaliacoes-e-datas', async (req, res) => {

@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
   try {
     const token = await authController.authenticate(email, password);
     if (token) {
-      res.cookie('token', token); // Configura o token JWT no cookie
+      res.cookie('token', token);
       res.redirect('/ucs');
     } else {
       res.status(401).send('Credenciais inválidas');

@@ -29,7 +29,7 @@ router.get('/', checkRole('Admin'), async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   try {
-    const user = await userController.findUserByIdPerfil(req.user.id); // Utiliza o id do token
+    const user = await userController.findUserByIdPerfil(req.user.id);
     if (user) {
       res.render('userProfile', { user, role: req.user.role });
     } else {
@@ -46,7 +46,7 @@ router.post('/profile', upload.single('foto'), async (req, res) => {
     if (req.file) {
       updatedData.foto = req.file.filename;
     }
-    await userController.updateProfile(req.user.id, updatedData, req.file); // Assuming req.user is set by auth middleware
+    await userController.updateProfile(req.user.id, updatedData, req.file);
     res.redirect('/users/profile');
   } catch (error) {
     res.status(500).send(error.message);
